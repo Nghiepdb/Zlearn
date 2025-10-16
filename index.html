@@ -8,8 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- AOS Animation -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root {
             --primary: #4361ee;
@@ -150,6 +148,11 @@
             color: var(--primary);
         }
         
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
         .auth-buttons button {
             background: var(--primary);
             color: white;
@@ -159,7 +162,6 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            margin-left: 10px;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -328,9 +330,12 @@
             padding: 0 20px;
         }
         
-        .hero-image svg {
-            max-width: 100%;
-            height: auto;
+        .hero-video {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
         
         .btn {
@@ -447,6 +452,22 @@
             margin: 0 auto;
         }
         
+        .survey-progress {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .survey-progress-bar {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
         .question {
             margin-bottom: 30px;
             padding-bottom: 25px;
@@ -476,6 +497,12 @@
         
         .options input[type="radio"] {
             margin-right: 12px;
+        }
+        
+        .survey-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
         }
         
         /* Dashboard */
@@ -603,6 +630,53 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
+        }
+        
+        .course-sidebar {
+            width: 300px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px var(--shadow);
+            margin-right: 30px;
+        }
+        
+        .course-main {
+            flex: 1;
+        }
+        
+        .course-layout {
+            display: flex;
+        }
+        
+        .lesson-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+        
+        .lesson-item {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .lesson-item:hover {
+            background: rgba(67, 97, 238, 0.05);
+        }
+        
+        .lesson-item.active {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .lesson-item i {
+            font-size: 0.9rem;
         }
         
         .course-tabs {
@@ -1192,40 +1266,6 @@
             border-left: 4px solid var(--danger);
         }
         
-        /* Loading Spinner */
-        .loading {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            z-index: 1300;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .loading.active {
-            display: flex;
-        }
-        
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(67, 97, 238, 0.2);
-            border-top: 5px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
         /* Footer */
         footer {
             background: var(--dark);
@@ -1293,6 +1333,16 @@
             
             .hero h1 {
                 font-size: 2.3rem;
+            }
+            
+            .course-layout {
+                flex-direction: column;
+            }
+            
+            .course-sidebar {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 30px;
             }
         }
         
@@ -1365,16 +1415,20 @@
             .message {
                 max-width: 90%;
             }
+            
+            .auth-buttons {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .auth-buttons button {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Loading Spinner -->
-    <div class="loading" id="loading">
-        <div class="spinner"></div>
-        <p>Đang tải...</p>
-    </div>
-
     <!-- Toast Notification -->
     <div class="toast" id="toast"></div>
 
@@ -1467,7 +1521,7 @@
     <div class="container">
         <!-- Home Page -->
         <div id="home" class="page active">
-            <div class="hero" data-aos="fade-up">
+            <div class="hero">
                 <div class="hero-content">
                     <h1>Zlearn - Học Tiếng Anh Cá Nhân Hóa</h1>
                     <p>Khám phá phương pháp học tiếng Anh thông minh với AI và video YouTube. Xác định trình độ, học theo lộ trình phù hợp và nhận chứng chỉ sau khi hoàn thành.</p>
@@ -1476,56 +1530,52 @@
                         Bắt đầu học ngay
                     </button>
                 </div>
-                <div class="hero-image" data-aos="fade-left" data-aos-delay="300">
-                    <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M250,100 C350,50 450,150 400,250 C350,350 150,350 100,250 C50,150 150,50 250,100 Z" fill="#4361ee" opacity="0.1"/>
-                        <circle cx="250" cy="200" r="80" fill="#4361ee" opacity="0.2"/>
-                        <path d="M200,150 L300,150 L300,250 L200,250 Z" fill="#4361ee" opacity="0.3"/>
-                        <circle cx="250" cy="200" r="40" fill="#4361ee"/>
-                        <path d="M240,190 L260,200 L240,210 Z" fill="white"/>
-                    </svg>
+                <div class="hero-image">
+                    <div class="hero-video">
+                        <iframe width="100%" height="225" src="https://www.youtube.com/embed/7Z0_NKp-COQ" title="YouTube Short về học tiếng Anh" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
             
             <div class="features">
-                <h2 class="section-title" data-aos="fade-up">Tính năng nổi bật</h2>
+                <h2 class="section-title">Tính năng nổi bật</h2>
                 <div class="features-grid">
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fas fa-chart-line"></i>
                         </div>
                         <h3>Đánh giá trình độ</h3>
                         <p>Làm bài khảo sát để xác định cấp độ tiếng Anh hiện tại của bạn.</p>
                     </div>
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fas fa-route"></i>
                         </div>
                         <h3>Lộ trình cá nhân hóa</h3>
                         <p>Học theo lộ trình được thiết kế riêng cho trình độ của bạn.</p>
                     </div>
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fas fa-video"></i>
                         </div>
                         <h3>Học qua video YouTube</h3>
                         <p>Học với video thực tế được chọn lọc phù hợp với cấp độ.</p>
                     </div>
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fas fa-robot"></i>
                         </div>
                         <h3>Tương tác với AI</h3>
                         <p>Luyện nói và chat với AI Gemini để cải thiện kỹ năng giao tiếp.</p>
                     </div>
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fas fa-certificate"></i>
                         </div>
                         <h3>Chứng chỉ trực tuyến</h3>
                         <p>Nhận chứng chỉ sau khi hoàn thành cấp độ Thành thạo.</p>
                     </div>
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fas fa-chart-bar"></i>
                         </div>
@@ -1537,23 +1587,23 @@
 
             <!-- Testimonials Section -->
             <div class="features">
-                <h2 class="section-title" data-aos="fade-up">Cảm nhận học viên</h2>
+                <h2 class="section-title">Cảm nhận học viên</h2>
                 <div class="features-grid">
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fas fa-user-graduate"></i>
                         </div>
                         <h3>Nguyễn Thị Hương</h3>
                         <p>"Zlearn đã giúp tôi tự tin giao tiếp tiếng Anh chỉ sau 3 tháng. Phương pháp học qua video và AI thực sự hiệu quả!"</p>
                     </div>
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fas fa-user-tie"></i>
                         </div>
                         <h3>Trần Văn Nam</h3>
                         <p>"Lộ trình cá nhân hóa phù hợp với trình độ của tôi. Tôi không còn cảm thấy chán nản khi học tiếng Anh nữa."</p>
                     </div>
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fas fa-user-graduate"></i>
                         </div>
@@ -1564,12 +1614,36 @@
             </div>
         </div>
 
-        <!-- Other pages (Login, Register, Survey, Dashboard, Course, Certificate, Admin) -->
-        <!-- These would be included here with the same structure as in the previous implementation -->
-        <!-- For brevity, I'm including placeholder content for these pages -->
+        <!-- Survey Page -->
+        <div id="survey" class="page">
+            <div class="survey-container">
+                <h2 style="text-align: center; margin-bottom: 20px; color: var(--primary);">Khảo sát trình độ tiếng Anh</h2>
+                <p style="text-align: center; margin-bottom: 30px;">Hãy trả lời các câu hỏi dưới đây để chúng tôi xác định cấp độ phù hợp nhất với bạn.</p>
+                
+                <div class="survey-progress">
+                    <div class="survey-progress-bar" id="survey-progress-bar"></div>
+                </div>
+                
+                <div id="survey-questions">
+                    <!-- Questions will be generated by JavaScript -->
+                </div>
+                
+                <div class="survey-nav">
+                    <button class="btn" id="prev-question" style="display: none;" onclick="prevQuestion()">
+                        <i class="fas fa-arrow-left"></i>
+                        Câu trước
+                    </button>
+                    <button class="btn" id="next-question" onclick="nextQuestion()">
+                        Câu tiếp theo
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
 
+        <!-- Login Page -->
         <div id="login" class="page">
-            <div class="survey-container" data-aos="fade-up">
+            <div class="survey-container">
                 <h2 style="text-align: center; margin-bottom: 20px; color: var(--primary);">Đăng nhập</h2>
                 <div class="form-group">
                     <label for="login-email">Email</label>
@@ -1586,8 +1660,9 @@
             </div>
         </div>
 
+        <!-- Register Page -->
         <div id="register" class="page">
-            <div class="survey-container" data-aos="fade-up">
+            <div class="survey-container">
                 <h2 style="text-align: center; margin-bottom: 20px; color: var(--primary);">Đăng ký tài khoản</h2>
                 <div class="form-group">
                     <label for="register-name">Họ và tên</label>
@@ -1612,6 +1687,7 @@
             </div>
         </div>
 
+        <!-- Dashboard Page -->
         <div id="dashboard" class="page">
             <div class="dashboard-header">
                 <h2 style="color: var(--primary);">Bảng điều khiển học tập</h2>
@@ -1619,7 +1695,7 @@
             </div>
             
             <div class="dashboard-grid">
-                <div class="dashboard-card" data-aos="fade-up">
+                <div class="dashboard-card">
                     <h3><i class="fas fa-chart-line"></i> Tiến độ học tập</h3>
                     <div class="progress-container">
                         <p>Cấp độ hiện tại: <span id="current-level">Chưa xác định</span></p>
@@ -1630,7 +1706,7 @@
                     </div>
                 </div>
                 
-                <div class="dashboard-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="dashboard-card">
                     <h3><i class="fas fa-trophy"></i> Các cấp độ</h3>
                     <div>
                         <span class="level-badge"><i class="fas fa-star"></i> Cơ bản</span>
@@ -1642,7 +1718,7 @@
                     <p style="margin-top: 15px;">Bạn đang ở cấp độ: <strong id="user-level">Chưa xác định</strong></p>
                 </div>
                 
-                <div class="dashboard-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="dashboard-card">
                     <h3><i class="fas fa-chart-pie"></i> Thống kê học tập</h3>
                     <p>Số khóa học đã hoàn thành: <strong id="completed-courses">0</strong></p>
                     <p>Số bài kiểm tra đã làm: <strong id="completed-tests">0</strong></p>
@@ -1650,14 +1726,332 @@
                 </div>
             </div>
             
-            <h3 style="margin: 30px 0 15px; color: var(--primary);">Khóa học của bạn</h3>
+            <h3 style="margin: 30px 0 15px; color: var(--primary);">Tất cả khóa học</h3>
             <div class="courses-grid" id="user-courses">
                 <!-- Courses will be generated by JavaScript -->
             </div>
         </div>
 
-        <!-- Additional pages would continue here -->
+        <!-- Course Page -->
+        <div id="course" class="page">
+            <div class="course-header">
+                <h2 id="course-title" style="color: var(--primary);">Tiêu đề khóa học</h2>
+            </div>
+            
+            <div class="course-layout">
+                <div class="course-sidebar">
+                    <h3>Danh sách bài học</h3>
+                    <ul class="lesson-list" id="lesson-list">
+                        <!-- Lessons will be generated by JavaScript -->
+                    </ul>
+                </div>
+                
+                <div class="course-main">
+                    <div class="course-tabs">
+                        <div class="tab active" onclick="changeTab('video')">
+                            <i class="fas fa-play-circle"></i>
+                            Video bài học
+                        </div>
+                        <div class="tab" onclick="changeTab('vocabulary')">
+                            <i class="fas fa-book"></i>
+                            Từ vựng
+                        </div>
+                        <div class="tab" onclick="changeTab('speaking')">
+                            <i class="fas fa-microphone"></i>
+                            Luyện nói
+                        </div>
+                        <div class="tab" onclick="changeTab('chat')">
+                            <i class="fas fa-comments"></i>
+                            Chat với AI
+                        </div>
+                        <div class="tab" onclick="changeTab('test')">
+                            <i class="fas fa-tasks"></i>
+                            Bài kiểm tra
+                        </div>
+                    </div>
+                    
+                    <div id="video-tab" class="tab-content active">
+                        <div class="video-container">
+                            <iframe id="course-video" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <h3 id="video-title">Tiêu đề video</h3>
+                            <p id="video-description">Mô tả video sẽ hiển thị ở đây.</p>
+                        </div>
+                    </div>
+                    
+                    <div id="vocabulary-tab" class="tab-content">
+                        <h3>Từ vựng trong bài</h3>
+                        <div class="vocabulary-list" id="vocab-list">
+                            <!-- Vocabulary items will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div id="speaking-tab" class="tab-content">
+                        <h3>Luyện nói với AI</h3>
+                        <div class="speaking-container">
+                            <p>Hãy nhấn nút bên dưới và nói từ/câu được hiển thị. AI sẽ đánh giá phát âm của bạn.</p>
+                            <div style="text-align: center; margin: 20px 0;">
+                                <div id="speaking-word" style="font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; color: var(--primary);">Từ cần phát âm</div>
+                                <button class="btn" onclick="startSpeechRecognition()">Bắt đầu nói</button>
+                            </div>
+                            <div class="speaking-visualizer" id="speaking-visualizer" style="display: none;">
+                                <div class="wave">
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                </div>
+                            </div>
+                            <div id="speaking-result" style="margin-top: 20px;"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="chat-tab" class="tab-content">
+                        <h3>Chat với AI về chủ đề bài học</h3>
+                        <div class="chat-container">
+                            <div class="chat-header">
+                                <div class="chat-avatar">AI</div>
+                                <div>
+                                    <h4 style="margin: 0;">Trợ lý Zlearn</h4>
+                                    <p style="margin: 0; font-size: 0.8rem;">Đang trực tuyến</p>
+                                </div>
+                            </div>
+                            <div class="chat-messages" id="chat-messages">
+                                <div class="message ai-message">
+                                    Xin chào! Tôi là trợ lý AI của Zlearn. Hãy trò chuyện với tôi về chủ đề bài học này nhé!
+                                </div>
+                            </div>
+                            <div class="chat-input">
+                                <input type="text" id="chat-input" placeholder="Nhập câu hỏi của bạn...">
+                                <button onclick="sendMessage()">Gửi</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="test-tab" class="tab-content">
+                        <h3>Bài kiểm tra cuối khóa</h3>
+                        <div class="test-container" id="test-questions">
+                            <!-- Test questions will be generated by JavaScript -->
+                        </div>
+                        <button class="btn" style="width: 100%; margin-top: 20px;" onclick="submitTest()">Nộp bài</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!-- Certificate Page -->
+        <div id="certificate" class="page">
+            <div class="certificate-container">
+                <h2 style="text-align: center; margin-bottom: 20px; color: var(--primary);">Chứng chỉ của bạn</h2>
+                
+                <div class="certificate" id="certificate-content">
+                    <div class="certificate-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h1>CHỨNG CHỈ TIẾNG ANH</h1>
+                    <p>Zlearn xác nhận</p>
+                    <h2 id="certificate-name" style="margin: 20px 0; color: var(--primary);">HỌ VÀ TÊN HỌC VIÊN</h2>
+                    <p>đã hoàn thành xuất sắc khóa học</p>
+                    <h3 style="margin: 15px 0; color: var(--secondary);">TIẾNG ANH THÀNH THẠO</h3>
+                    <p>vào ngày <span id="certificate-date">DD/MM/YYYY</span></p>
+                    <div class="certificate-code">
+                        Mã chứng chỉ: <span id="certificate-code">ZL-XXXX-XXXX</span>
+                    </div>
+                    <div class="certificate-signature">
+                        <div>
+                            <div class="signature-line"></div>
+                            <p>Giám đốc Zlearn</p>
+                        </div>
+                        <div>
+                            <div class="signature-line"></div>
+                            <p>Giảng viên</p>
+                        </div>
+                    </div>
+                    <p style="margin-top: 30px;">Zlearn Certification</p>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn" onclick="downloadCertificate()">
+                        <i class="fas fa-download"></i>
+                        Tải về PDF
+                    </button>
+                </div>
+                
+                <div id="no-certificate" style="text-align: center; padding: 60px 20px; display: none;">
+                    <i class="fas fa-award" style="font-size: 5rem; color: #ddd; margin-bottom: 20px;"></i>
+                    <h3 style="color: var(--danger); margin-bottom: 15px;">Bạn chưa có chứng chỉ nào</h3>
+                    <p>Hãy hoàn thành cấp độ Thành thạo để nhận chứng chỉ từ Zlearn!</p>
+                    <button class="btn" onclick="showPage('dashboard')">Bắt đầu học ngay</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Login Page -->
+        <div id="admin-login" class="page">
+            <div class="survey-container">
+                <h2 style="text-align: center; margin-bottom: 20px; color: var(--primary);">Đăng nhập quản trị</h2>
+                <div class="form-group">
+                    <label for="admin-email">Email</label>
+                    <input type="email" id="admin-email" placeholder="Nhập email quản trị">
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Mật khẩu</label>
+                    <input type="password" id="admin-password" placeholder="Nhập mật khẩu quản trị">
+                </div>
+                <button class="btn" style="width: 100%;" onclick="adminLogin()">Đăng nhập quản trị</button>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="admin-panel" class="page">
+            <h2 style="margin-bottom: 20px; color: var(--primary);">Bảng điều khiển quản trị</h2>
+            
+            <div class="admin-tabs">
+                <div class="admin-tab active" onclick="changeAdminTab('users')">
+                    <i class="fas fa-users"></i>
+                    Quản lý người dùng
+                </div>
+                <div class="admin-tab" onclick="changeAdminTab('courses')">
+                    <i class="fas fa-book"></i>
+                    Quản lý khóa học
+                </div>
+                <div class="admin-tab" onclick="changeAdminTab('videos')">
+                    <i class="fas fa-video"></i>
+                    Quản lý video
+                </div>
+                <div class="admin-tab" onclick="changeAdminTab('progress')">
+                    <i class="fas fa-chart-line"></i>
+                    Theo dõi tiến độ
+                </div>
+            </div>
+            
+            <div id="users-tab" class="admin-content active">
+                <h3>Danh sách người học</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Họ tên</th>
+                            <th>Email</th>
+                            <th>Cấp độ</th>
+                            <th>Khóa học đã hoàn thành</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table">
+                        <!-- Users will be generated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="courses-tab" class="admin-content">
+                <h3>Quản lý khóa học</h3>
+                <button class="btn" style="margin-bottom: 15px;" onclick="showAddCourseForm()">Thêm khóa học mới</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên khóa học</th>
+                            <th>Cấp độ</th>
+                            <th>Số bài học</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courses-table">
+                        <!-- Courses will be generated by JavaScript -->
+                    </tbody>
+                </table>
+                
+                <div id="add-course-form" style="display: none; margin-top: 30px;">
+                    <h4>Thêm khóa học mới</h4>
+                    <div class="form-group">
+                        <label for="course-name">Tên khóa học</label>
+                        <input type="text" id="course-name" placeholder="Nhập tên khóa học">
+                    </div>
+                    <div class="form-group">
+                        <label for="course-level">Cấp độ</label>
+                        <select id="course-level">
+                            <option value="basic">Cơ bản</option>
+                            <option value="elementary">Sơ cấp</option>
+                            <option value="intermediate">Trung cấp</option>
+                            <option value="advanced">Cao cấp</option>
+                            <option value="proficient">Thành thạo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="course-description">Mô tả khóa học</label>
+                        <textarea id="course-description" rows="3" placeholder="Nhập mô tả khóa học"></textarea>
+                    </div>
+                    <button class="btn" onclick="addCourse()">Thêm khóa học</button>
+                    <button class="btn" style="background: #6c757d;" onclick="hideAddCourseForm()">Hủy</button>
+                </div>
+            </div>
+            
+            <div id="videos-tab" class="admin-content">
+                <h3>Quản lý video YouTube</h3>
+                <button class="btn" style="margin-bottom: 15px;" onclick="showAddVideoForm()">Thêm video mới</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tiêu đề</th>
+                            <th>Khóa học</th>
+                            <th>Link YouTube</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="videos-table">
+                        <!-- Videos will be generated by JavaScript -->
+                    </tbody>
+                </table>
+                
+                <div id="add-video-form" style="display: none; margin-top: 30px;">
+                    <h4>Thêm video mới</h4>
+                    <div class="form-group">
+                        <label for="video-title">Tiêu đề video</label>
+                        <input type="text" id="video-title" placeholder="Nhập tiêu đề video">
+                    </div>
+                    <div class="form-group">
+                        <label for="video-course">Khóa học</label>
+                        <select id="video-course">
+                            <!-- Courses will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="video-url">Link YouTube</label>
+                        <input type="text" id="video-url" placeholder="Dán link YouTube tại đây">
+                    </div>
+                    <div class="form-group">
+                        <label for="video-description-admin">Mô tả video</label>
+                        <textarea id="video-description-admin" rows="3" placeholder="Nhập mô tả video"></textarea>
+                    </div>
+                    <button class="btn" onclick="addVideo()">Thêm video</button>
+                    <button class="btn" style="background: #6c757d;" onclick="hideAddVideoForm()">Hủy</button>
+                </div>
+            </div>
+            
+            <div id="progress-tab" class="admin-content">
+                <h3>Theo dõi tiến độ người học</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Họ tên</th>
+                            <th>Cấp độ hiện tại</th>
+                            <th>Khóa học đã hoàn thành</th>
+                            <th>Điểm trung bình</th>
+                            <th>Thời gian học</th>
+                        </tr>
+                    </thead>
+                    <tbody id="progress-table">
+                        <!-- Progress data will be generated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -1688,15 +2082,1009 @@
         </div>
     </footer>
 
-    <!-- AOS Animation -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 100
-        });
+        // API Configuration
+        const GEMINI_API_KEY = "AIzaSyCIwoa2OOyaArgJwDXvKcMVg57_PUVYI5k";
+        const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
+        
+        // Dữ liệu mẫu
+        const sampleData = {
+            users: [
+                { id: 1, name: "Nguyễn Văn A", email: "a@example.com", level: "intermediate", completedCourses: 3 },
+                { id: 2, name: "Trần Thị B", email: "b@example.com", level: "elementary", completedCourses: 1 },
+                { id: 3, name: "Lê Văn C", email: "c@example.com", level: "advanced", completedCourses: 5 }
+            ],
+            courses: [
+                { 
+                    id: 1, 
+                    name: "Tiếng Anh Giao Tiếp Cơ Bản", 
+                    level: "basic", 
+                    description: "Khóa học dành cho người mới bắt đầu học tiếng Anh",
+                    lessons: [
+                        { id: 1, title: "Giới thiệu bản thân", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Học cách giới thiệu bản thân bằng tiếng Anh" },
+                        { id: 2, title: "Chào hỏi và tạm biệt", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Các cách chào hỏi và nói lời tạm biệt" },
+                        { id: 3, title: "Hỏi và trả lời về thông tin cá nhân", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Hỏi và trả lời các câu hỏi về thông tin cá nhân" }
+                    ]
+                },
+                { 
+                    id: 2, 
+                    name: "Tiếng Anh cho Công việc", 
+                    level: "intermediate", 
+                    description: "Nâng cao kỹ năng tiếng Anh trong môi trường công sở",
+                    lessons: [
+                        { id: 4, title: "Tiếng Anh trong cuộc họp", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Các mẫu câu thường dùng trong cuộc họp" },
+                        { id: 5, title: "Viết email chuyên nghiệp", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Học cách viết email bằng tiếng Anh chuyên nghiệp" },
+                        { id: 6, title: "Thuyết trình bằng tiếng Anh", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Kỹ năng thuyết trình hiệu quả bằng tiếng Anh" }
+                    ]
+                },
+                { 
+                    id: 3, 
+                    name: "Luyện Phát Âm Chuẩn", 
+                    level: "advanced", 
+                    description: "Cải thiện phát âm và ngữ điệu tiếng Anh",
+                    lessons: [
+                        { id: 7, title: "Nguyên âm và phụ âm", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Học cách phát âm chuẩn các nguyên âm và phụ âm" },
+                        { id: 8, title: "Trọng âm và ngữ điệu", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Luyện tập trọng âm và ngữ điệu trong câu" },
+                        { id: 9, title: "Phát âm nâng cao", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Các kỹ thuật phát âm nâng cao" }
+                    ]
+                }
+            ],
+            vocabulary: [
+                { word: "hello", meaning: "xin chào", example: "Hello, how are you?" },
+                { word: "goodbye", meaning: "tạm biệt", example: "Goodbye, see you tomorrow!" },
+                { word: "thank you", meaning: "cảm ơn", example: "Thank you for your help." },
+                { word: "please", meaning: "làm ơn", example: "Please pass me the salt." },
+                { word: "sorry", meaning: "xin lỗi", example: "I'm sorry for being late." }
+            ],
+            surveyQuestions: [
+                {
+                    question: "Bạn đã học tiếng Anh được bao lâu?",
+                    options: [
+                        "Chưa bao giờ học",
+                        "Dưới 6 tháng",
+                        "6 tháng - 1 năm",
+                        "1 - 2 năm",
+                        "Trên 2 năm"
+                    ]
+                },
+                {
+                    question: "Bạn có thể giới thiệu bản thân bằng tiếng Anh không?",
+                    options: [
+                        "Không thể",
+                        "Chỉ nói được tên",
+                        "Có thể nói tên và một số thông tin cơ bản",
+                        "Có thể giới thiệu khá chi tiết",
+                        "Có thể giới thiệu một cách trôi chảy"
+                    ]
+                },
+                {
+                    question: "Bạn hiểu được bao nhiêu % khi nghe người bản ngữ nói chuyện?",
+                    options: [
+                        "Dưới 20%",
+                        "20-40%",
+                        "40-60%",
+                        "60-80%",
+                        "Trên 80%"
+                    ]
+                },
+                {
+                    question: "Bạn có thể viết một đoạn văn ngắn bằng tiếng Anh không?",
+                    options: [
+                        "Không thể",
+                        "Chỉ viết được vài câu đơn giản",
+                        "Có thể viết đoạn văn ngắn với nhiều lỗi",
+                        "Có thể viết đoạn văn với ít lỗi",
+                        "Có thể viết đoạn văn dài và phức tạp"
+                    ]
+                },
+                {
+                    question: "Bạn có thể đọc và hiểu báo/tài liệu tiếng Anh không?",
+                    options: [
+                        "Không thể",
+                        "Chỉ hiểu một vài từ đơn lẻ",
+                        "Hiểu được ý chính của đoạn văn ngắn",
+                        "Hiểu được hầu hết nội dung",
+                        "Hiểu hoàn toàn và có thể phân tích"
+                    ]
+                }
+            ]
+        };
+
+        // Biến toàn cục
+        let currentUser = null;
+        let currentCourse = null;
+        let currentLesson = null;
+        let userLevel = null;
+        let userProgress = 0;
+        let currentQuestionIndex = 0;
+        let surveyAnswers = [];
+
+        // Hiển thị trang
+        function showPage(pageId) {
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            document.querySelectorAll(`[onclick="showPage('${pageId}')"]`).forEach(link => {
+                link.classList.add('active');
+            });
+            
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Close mobile menu if open
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            
+            // Cập nhật nội dung động cho một số trang
+            if (pageId === 'survey') {
+                currentQuestionIndex = 0;
+                surveyAnswers = [];
+                showQuestion(currentQuestionIndex);
+            } else if (pageId === 'dashboard') {
+                updateDashboard();
+            } else if (pageId === 'certificate') {
+                checkCertificate();
+            } else if (pageId === 'admin-panel') {
+                updateAdminPanel();
+            }
+        }
+
+        // Hiển thị câu hỏi khảo sát
+        function showQuestion(index) {
+            const container = document.getElementById('survey-questions');
+            const question = sampleData.surveyQuestions[index];
+            
+            container.innerHTML = `
+                <div class="question">
+                    <h3>Câu ${index + 1}: ${question.question}</h3>
+                    <div class="options">
+                        ${question.options.map((option, optIndex) => `
+                            <label>
+                                <input type="radio" name="question" value="${optIndex}">
+                                ${option}
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // Cập nhật progress bar
+            const progress = ((index + 1) / sampleData.surveyQuestions.length) * 100;
+            document.getElementById('survey-progress-bar').style.width = `${progress}%`;
+            
+            // Cập nhật nút điều hướng
+            document.getElementById('prev-question').style.display = index === 0 ? 'none' : 'inline-flex';
+            document.getElementById('next-question').innerHTML = index === sampleData.surveyQuestions.length - 1 ? 
+                'Hoàn thành <i class="fas fa-check"></i>' : 
+                'Câu tiếp theo <i class="fas fa-arrow-right"></i>';
+        }
+
+        // Chuyển đến câu hỏi tiếp theo
+        function nextQuestion() {
+            const selectedOption = document.querySelector('input[name="question"]:checked');
+            
+            if (!selectedOption) {
+                showToast('Vui lòng chọn một đáp án!', 'error');
+                return;
+            }
+            
+            surveyAnswers[currentQuestionIndex] = parseInt(selectedOption.value);
+            
+            if (currentQuestionIndex < sampleData.surveyQuestions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion(currentQuestionIndex);
+            } else {
+                submitSurvey();
+            }
+        }
+
+        // Quay lại câu hỏi trước
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion(currentQuestionIndex);
+            }
+        }
+
+        // Gửi khảo sát
+        function submitSurvey() {
+            // Tính điểm khảo sát (đơn giản hóa)
+            let score = 0;
+            
+            surveyAnswers.forEach(answer => {
+                score += answer;
+            });
+            
+            // Xác định cấp độ dựa trên điểm
+            if (score <= 5) userLevel = 'basic';
+            else if (score <= 10) userLevel = 'elementary';
+            else if (score <= 15) userLevel = 'intermediate';
+            else if (score <= 18) userLevel = 'advanced';
+            else userLevel = 'proficient';
+            
+            // Lưu thông tin người dùng
+            if (currentUser) {
+                currentUser.level = userLevel;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            }
+            
+            // Hiển thị kết quả
+            showToast(`Kết quả khảo sát: Bạn đang ở cấp độ ${getLevelName(userLevel)}`, 'success');
+            
+            // Chuyển đến trang dashboard
+            showPage('dashboard');
+        }
+
+        // Cập nhật dashboard
+        function updateDashboard() {
+            // Cập nhật thông tin cấp độ
+            if (currentUser && currentUser.level) {
+                document.getElementById('current-level').textContent = getLevelName(currentUser.level);
+                document.getElementById('user-level').textContent = getLevelName(currentUser.level);
+                
+                // Tính phần trăm tiến độ (giả lập)
+                const levelProgress = {
+                    'basic': 20,
+                    'elementary': 40,
+                    'intermediate': 60,
+                    'advanced': 80,
+                    'proficient': 100
+                };
+                
+                userProgress = levelProgress[currentUser.level] || 0;
+                document.getElementById('level-progress').style.width = `${userProgress}%`;
+                document.getElementById('progress-text').textContent = `${userProgress}% hoàn thành`;
+            }
+            
+            // Cập nhật thống kê
+            if (currentUser) {
+                document.getElementById('completed-courses').textContent = currentUser.completedCourses || 0;
+                document.getElementById('completed-tests').textContent = currentUser.completedTests || 0;
+                document.getElementById('average-score').textContent = currentUser.averageScore || '0';
+            }
+            
+            // Hiển thị khóa học
+            const userCoursesContainer = document.getElementById('user-courses');
+            userCoursesContainer.innerHTML = '';
+            
+            sampleData.courses.forEach(course => {
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.style.cursor = 'pointer';
+                courseCard.onclick = () => openCourse(course);
+                
+                courseCard.innerHTML = `
+                    <div class="course-thumbnail">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="course-content">
+                        <h4>${course.name}</h4>
+                        <p>${course.description}</p>
+                        <div class="course-meta">
+                            <span>Cấp độ: ${getLevelName(course.level)}</span>
+                            <span>${course.lessons.length} bài học</span>
+                        </div>
+                    </div>
+                `;
+                
+                userCoursesContainer.appendChild(courseCard);
+            });
+        }
+
+        // Mở khóa học
+        function openCourse(course) {
+            currentCourse = course;
+            document.getElementById('course-title').textContent = course.name;
+            
+            // Hiển thị danh sách bài học
+            const lessonList = document.getElementById('lesson-list');
+            lessonList.innerHTML = '';
+            
+            course.lessons.forEach((lesson, index) => {
+                const lessonItem = document.createElement('li');
+                lessonItem.className = 'lesson-item';
+                if (index === 0) {
+                    lessonItem.classList.add('active');
+                    currentLesson = lesson;
+                    updateLessonContent(lesson);
+                }
+                lessonItem.innerHTML = `
+                    <i class="fas fa-play-circle"></i>
+                    <span>Bài ${index + 1}: ${lesson.title}</span>
+                `;
+                lessonItem.onclick = () => {
+                    document.querySelectorAll('.lesson-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    lessonItem.classList.add('active');
+                    currentLesson = lesson;
+                    updateLessonContent(lesson);
+                };
+                lessonList.appendChild(lessonItem);
+            });
+            
+            // Hiển thị trang khóa học
+            showPage('course');
+        }
+
+        // Cập nhật nội dung bài học
+        function updateLessonContent(lesson) {
+            // Cập nhật video
+            document.getElementById('course-video').src = lesson.videoUrl;
+            document.getElementById('video-title').textContent = lesson.title;
+            document.getElementById('video-description').textContent = lesson.description;
+            
+            // Cập nhật từ vựng
+            const vocabList = document.getElementById('vocab-list');
+            vocabList.innerHTML = '';
+            
+            sampleData.vocabulary.forEach(vocab => {
+                const vocabItem = document.createElement('div');
+                vocabItem.className = 'vocab-item';
+                vocabItem.innerHTML = `
+                    <div class="vocab-front">
+                        <div class="vocab-word">${vocab.word}</div>
+                        <div class="vocab-pronunciation">
+                            <button class="pronounce-btn" onclick="pronounceWord('${vocab.word}')">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                            <span>Nhấn để xem nghĩa</span>
+                        </div>
+                    </div>
+                    <div class="vocab-back">
+                        <div class="vocab-meaning">${vocab.meaning}</div>
+                        <div class="vocab-example">${vocab.example}</div>
+                        <div class="vocab-pronunciation">
+                            <button class="pronounce-btn" onclick="pronounceWord('${vocab.word}')">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                            <span>Nhấn để quay lại</span>
+                        </div>
+                    </div>
+                `;
+                vocabItem.onclick = () => {
+                    vocabItem.classList.toggle('flipped');
+                };
+                vocabList.appendChild(vocabItem);
+            });
+            
+            // Tạo câu hỏi kiểm tra
+            generateTestQuestions();
+            
+            // Reset chat
+            document.getElementById('chat-messages').innerHTML = `
+                <div class="message ai-message">
+                    Xin chào! Tôi là trợ lý AI của Zlearn. Hãy trò chuyện với tôi về chủ đề "${lesson.title}" nhé!
+                </div>
+            `;
+        }
+
+        // Chuyển tab trong khóa học
+        function changeTab(tabName) {
+            // Ẩn tất cả các tab
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Bỏ active tất cả các tab
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Hiển thị tab được chọn
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // Đánh dấu tab được chọn
+            document.querySelectorAll('.tab').forEach(tab => {
+                if (tab.textContent.toLowerCase().includes(tabName)) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+
+        // Tạo câu hỏi kiểm tra
+        function generateTestQuestions() {
+            const testContainer = document.getElementById('test-questions');
+            testContainer.innerHTML = '';
+            
+            const questions = [
+                {
+                    question: "What does 'hello' mean?",
+                    options: ["Xin chào", "Tạm biệt", "Cảm ơn", "Xin lỗi"],
+                    correct: 0
+                },
+                {
+                    question: "Which word means 'tạm biệt'?",
+                    options: ["Hello", "Goodbye", "Thank you", "Please"],
+                    correct: 1
+                },
+                {
+                    question: "Complete the sentence: '___ you for your help.'",
+                    options: ["Hello", "Goodbye", "Thank", "Sorry"],
+                    correct: 2
+                },
+                {
+                    question: "What is the response to 'Thank you'?",
+                    options: ["Hello", "Goodbye", "You're welcome", "Please"],
+                    correct: 2
+                },
+                {
+                    question: "Which word is used to make a polite request?",
+                    options: ["Hello", "Goodbye", "Thank you", "Please"],
+                    correct: 3
+                }
+            ];
+            
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'test-question';
+                
+                const questionTitle = document.createElement('h4');
+                questionTitle.textContent = `Câu ${index + 1}: ${q.question}`;
+                questionDiv.appendChild(questionTitle);
+                
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+                
+                q.options.forEach((option, optIndex) => {
+                    const label = document.createElement('label');
+                    
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = `test-question-${index}`;
+                    input.value = optIndex;
+                    
+                    label.appendChild(input);
+                    label.appendChild(document.createTextNode(option));
+                    optionsDiv.appendChild(label);
+                });
+                
+                questionDiv.appendChild(optionsDiv);
+                testContainer.appendChild(questionDiv);
+            });
+        }
+
+        // Gửi bài kiểm tra
+        function submitTest() {
+            let score = 0;
+            const totalQuestions = 5;
+            
+            // Tính điểm (đơn giản hóa)
+            for (let i = 0; i < totalQuestions; i++) {
+                const selectedOption = document.querySelector(`input[name="test-question-${i}"]:checked`);
+                if (selectedOption && parseInt(selectedOption.value) === i) { // Giả sử câu trả lời đúng là chỉ số câu hỏi
+                    score++;
+                }
+            }
+            
+            // Cập nhật thông tin người dùng
+            if (currentUser) {
+                currentUser.completedTests = (currentUser.completedTests || 0) + 1;
+                currentUser.averageScore = ((currentUser.averageScore || 0) + score) / currentUser.completedTests;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            }
+            
+            // Hiển thị kết quả
+            showToast(`Kết quả bài kiểm tra: ${score}/${totalQuestions} (${(score/totalQuestions*100).toFixed(0)}%)`, 'success');
+            
+            // Nếu điểm cao, hoàn thành khóa học
+            if (score >= 4) {
+                if (currentUser) {
+                    currentUser.completedCourses = (currentUser.completedCourses || 0) + 1;
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    
+                    // Nếu hoàn thành cấp độ thành thạo, cấp chứng chỉ
+                    if (currentUser.level === 'proficient' && currentUser.completedCourses >= 5) {
+                        awardCertificate();
+                    }
+                }
+                
+                showToast('Chúc mừng! Bạn đã hoàn thành khóa học này.', 'success');
+            }
+        }
+
+        // Kiểm tra chứng chỉ
+        function checkCertificate() {
+            const hasCertificate = currentUser && currentUser.level === 'proficient' && currentUser.completedCourses >= 5;
+            
+            if (hasCertificate) {
+                document.getElementById('certificate-content').style.display = 'block';
+                document.getElementById('no-certificate').style.display = 'none';
+                
+                // Cập nhật thông tin chứng chỉ
+                document.getElementById('certificate-name').textContent = currentUser.name || 'Học viên';
+                document.getElementById('certificate-date').textContent = new Date().toLocaleDateString('vi-VN');
+                document.getElementById('certificate-code').textContent = `ZL-${currentUser.id}-${Date.now().toString().slice(-4)}`;
+            } else {
+                document.getElementById('certificate-content').style.display = 'none';
+                document.getElementById('no-certificate').style.display = 'block';
+            }
+        }
+
+        // Cấp chứng chỉ
+        function awardCertificate() {
+            if (currentUser) {
+                currentUser.hasCertificate = true;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showToast('Chúc mừng! Bạn đã nhận được chứng chỉ tiếng Anh thành thạo từ Zlearn.', 'success');
+            }
+        }
+
+        // Tải chứng chỉ
+        function downloadCertificate() {
+            showToast('Tính năng tải chứng chỉ PDF đang được phát triển.', 'success');
+        }
+
+        // Bắt đầu học
+        function startLearning() {
+            if (currentUser) {
+                showPage('dashboard');
+            } else {
+                showPage('survey');
+            }
+        }
+
+        // Đăng nhập
+        function login() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (email && password) {
+                // Đơn giản hóa: tạo người dùng mới hoặc đăng nhập
+                currentUser = {
+                    id: Date.now(),
+                    name: "Người dùng Zlearn",
+                    email: email,
+                    level: 'basic',
+                    completedCourses: 0,
+                    completedTests: 0,
+                    averageScore: 0
+                };
+                
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Cập nhật giao diện
+                document.getElementById('login-btn').style.display = 'none';
+                document.getElementById('register-btn').style.display = 'none';
+                document.getElementById('logout-btn').style.display = 'inline-block';
+                document.getElementById('mobile-login-btn').style.display = 'none';
+                document.getElementById('mobile-register-btn').style.display = 'none';
+                document.getElementById('mobile-logout-btn').style.display = 'flex';
+                
+                // Chuyển đến trang chủ
+                showPage('home');
+                
+                showToast('Đăng nhập thành công!', 'success');
+            } else {
+                showToast('Vui lòng nhập đầy đủ thông tin.', 'error');
+            }
+        }
+
+        // Đăng ký
+        function register() {
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+            
+            if (name && email && password && confirm) {
+                if (password !== confirm) {
+                    showToast('Mật khẩu xác nhận không khớp.', 'error');
+                    return;
+                }
+                
+                // Đơn giản hóa: tạo người dùng mới
+                currentUser = {
+                    id: Date.now(),
+                    name: name,
+                    email: email,
+                    level: 'basic',
+                    completedCourses: 0,
+                    completedTests: 0,
+                    averageScore: 0
+                };
+                
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Cập nhật giao diện
+                document.getElementById('login-btn').style.display = 'none';
+                document.getElementById('register-btn').style.display = 'none';
+                document.getElementById('logout-btn').style.display = 'inline-block';
+                document.getElementById('mobile-login-btn').style.display = 'none';
+                document.getElementById('mobile-register-btn').style.display = 'none';
+                document.getElementById('mobile-logout-btn').style.display = 'flex';
+                
+                // Chuyển đến trang khảo sát
+                showPage('survey');
+                
+                showToast('Đăng ký thành công! Hãy làm bài khảo sát để xác định trình độ.', 'success');
+            } else {
+                showToast('Vui lòng nhập đầy đủ thông tin.', 'error');
+            }
+        }
+
+        // Đăng xuất
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            
+            // Cập nhật giao diện
+            document.getElementById('login-btn').style.display = 'inline-block';
+            document.getElementById('register-btn').style.display = 'inline-block';
+            document.getElementById('logout-btn').style.display = 'none';
+            document.getElementById('mobile-login-btn').style.display = 'flex';
+            document.getElementById('mobile-register-btn').style.display = 'flex';
+            document.getElementById('mobile-logout-btn').style.display = 'none';
+            
+            // Chuyển đến trang chủ
+            showPage('home');
+            
+            showToast('Đã đăng xuất.', 'success');
+        }
+
+        // Phát âm từ
+        function pronounceWord(word) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(word);
+                utterance.lang = 'en-US';
+                window.speechSynthesis.speak(utterance);
+            } else {
+                showToast('Trình duyệt của bạn không hỗ trợ phát âm.', 'error');
+            }
+        }
+
+        // Nhận dạng giọng nói
+        function startSpeechRecognition() {
+            document.getElementById('speaking-visualizer').style.display = 'flex';
+            
+            // Giả lập quá trình nhận dạng giọng nói
+            setTimeout(() => {
+                document.getElementById('speaking-visualizer').style.display = 'none';
+                document.getElementById('speaking-result').innerHTML = `
+                    <div style="background: #e8f5e8; padding: 15px; border-radius: 5px;">
+                        <h4 style="color: #2e7d32; margin-bottom: 10px;">Kết quả đánh giá</h4>
+                        <p>Phát âm của bạn: <strong>Khá tốt</strong></p>
+                        <p>Độ chính xác: <strong>85%</strong></p>
+                        <p>Gợi ý cải thiện: Hãy chú ý đến âm cuối của từ.</p>
+                    </div>
+                `;
+            }, 3000);
+        }
+
+        // Gửi tin nhắn chat với AI
+        async function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            
+            if (message) {
+                const chatMessages = document.getElementById('chat-messages');
+                
+                // Thêm tin nhắn người dùng
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message user-message';
+                userMessage.textContent = message;
+                chatMessages.appendChild(userMessage);
+                
+                // Xóa input
+                input.value = '';
+                
+                // Hiển thị trạng thái đang gửi
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'message ai-message';
+                typingIndicator.innerHTML = '<i>AI đang trả lời...</i>';
+                chatMessages.appendChild(typingIndicator);
+                
+                // Cuộn xuống cuối
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                try {
+                    // Gọi API Gemini
+                    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            contents: [
+                                {
+                                    parts: [
+                                        {
+                                            text: `Bạn là trợ lý AI cho ứng dụng học tiếng Anh Zlearn. Hãy trả lời câu hỏi sau bằng tiếng Việt, tập trung vào chủ đề học tiếng Anh: ${message}`
+                                        }
+                                    ]
+                                }
+                            ]
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    // Xóa trạng thái đang gửi
+                    chatMessages.removeChild(typingIndicator);
+                    
+                    // Thêm phản hồi từ AI
+                    const aiMessage = document.createElement('div');
+                    aiMessage.className = 'message ai-message';
+                    
+                    if (data.candidates && data.candidates[0].content.parts[0].text) {
+                        aiMessage.textContent = data.candidates[0].content.parts[0].text;
+                    } else {
+                        aiMessage.textContent = "Xin lỗi, tôi không thể xử lý yêu cầu của bạn lúc này. Vui lòng thử lại sau.";
+                    }
+                    
+                    chatMessages.appendChild(aiMessage);
+                    
+                    // Cuộn xuống cuối
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                } catch (error) {
+                    console.error('Lỗi khi gọi API Gemini:', error);
+                    
+                    // Xóa trạng thái đang gửi
+                    chatMessages.removeChild(typingIndicator);
+                    
+                    // Thêm phản hồi lỗi
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'message ai-message';
+                    errorMessage.textContent = "Xin lỗi, đã xảy ra lỗi khi kết nối với AI. Vui lòng thử lại sau.";
+                    chatMessages.appendChild(errorMessage);
+                    
+                    // Cuộn xuống cuối
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            }
+        }
+
+        // Đăng nhập quản trị
+        function adminLogin() {
+            const email = document.getElementById('admin-email').value;
+            const password = document.getElementById('admin-password').value;
+            
+            // Đơn giản hóa: cho phép đăng nhập với bất kỳ thông tin nào
+            if (email && password) {
+                showPage('admin-panel');
+            } else {
+                showToast('Vui lòng nhập thông tin đăng nhập.', 'error');
+            }
+        }
+
+        // Cập nhật bảng quản trị
+        function updateAdminPanel() {
+            // Cập nhật danh sách người dùng
+            const usersTable = document.getElementById('users-table');
+            usersTable.innerHTML = '';
+            
+            sampleData.users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${getLevelName(user.level)}</td>
+                    <td>${user.completedCourses}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-edit"><i class="fas fa-edit"></i></button>
+                            <button class="btn-delete"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </td>
+                `;
+                usersTable.appendChild(row);
+            });
+            
+            // Cập nhật danh sách khóa học
+            const coursesTable = document.getElementById('courses-table');
+            coursesTable.innerHTML = '';
+            
+            sampleData.courses.forEach(course => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${course.id}</td>
+                    <td>${course.name}</td>
+                    <td>${getLevelName(course.level)}</td>
+                    <td>${course.lessons.length}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-edit"><i class="fas fa-edit"></i></button>
+                            <button class="btn-delete"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </td>
+                `;
+                coursesTable.appendChild(row);
+            });
+            
+            // Cập nhật danh sách video
+            const videosTable = document.getElementById('videos-table');
+            videosTable.innerHTML = '';
+            
+            sampleData.courses.forEach(course => {
+                course.lessons.forEach(lesson => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${lesson.id}</td>
+                        <td>${lesson.title}</td>
+                        <td>${course.name}</td>
+                        <td>${lesson.videoUrl.substring(0, 30)}...</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-edit"><i class="fas fa-edit"></i></button>
+                                <button class="btn-delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    `;
+                    videosTable.appendChild(row);
+                });
+            });
+            
+            // Cập nhật danh sách tiến độ
+            const progressTable = document.getElementById('progress-table');
+            progressTable.innerHTML = '';
+            
+            sampleData.users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.name}</td>
+                    <td>${getLevelName(user.level)}</td>
+                    <td>${user.completedCourses}</td>
+                    <td>${Math.floor(Math.random() * 30) + 70}/100</td>
+                    <td>${Math.floor(Math.random() * 50) + 10} giờ</td>
+                `;
+                progressTable.appendChild(row);
+            });
+            
+            // Cập nhật dropdown khóa học cho form thêm video
+            const courseSelect = document.getElementById('video-course');
+            courseSelect.innerHTML = '';
+            
+            sampleData.courses.forEach(course => {
+                const option = document.createElement('option');
+                option.value = course.id;
+                option.textContent = course.name;
+                courseSelect.appendChild(option);
+            });
+        }
+
+        // Chuyển tab quản trị
+        function changeAdminTab(tabName) {
+            // Ẩn tất cả các tab
+            document.querySelectorAll('.admin-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Bỏ active tất cả các tab
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Hiển thị tab được chọn
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // Đánh dấu tab được chọn
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                if (tab.textContent.toLowerCase().includes(tabName)) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+
+        // Hiển thị form thêm khóa học
+        function showAddCourseForm() {
+            document.getElementById('add-course-form').style.display = 'block';
+        }
+
+        // Ẩn form thêm khóa học
+        function hideAddCourseForm() {
+            document.getElementById('add-course-form').style.display = 'none';
+        }
+
+        // Thêm khóa học
+        function addCourse() {
+            const name = document.getElementById('course-name').value;
+            const level = document.getElementById('course-level').value;
+            const description = document.getElementById('course-description').value;
+            
+            if (name && level && description) {
+                // Thêm khóa học mới (trong thực tế sẽ gửi request đến server)
+                const newCourse = {
+                    id: sampleData.courses.length + 1,
+                    name: name,
+                    level: level,
+                    description: description,
+                    lessons: []
+                };
+                
+                sampleData.courses.push(newCourse);
+                
+                // Cập nhật giao diện
+                updateAdminPanel();
+                hideAddCourseForm();
+                
+                // Reset form
+                document.getElementById('course-name').value = '';
+                document.getElementById('course-description').value = '';
+                
+                showToast('Đã thêm khóa học mới thành công!', 'success');
+            } else {
+                showToast('Vui lòng nhập đầy đủ thông tin.', 'error');
+            }
+        }
+
+        // Hiển thị form thêm video
+        function showAddVideoForm() {
+            document.getElementById('add-video-form').style.display = 'block';
+        }
+
+        // Ẩn form thêm video
+        function hideAddVideoForm() {
+            document.getElementById('add-video-form').style.display = 'none';
+        }
+
+        // Thêm video
+        function addVideo() {
+            const title = document.getElementById('video-title').value;
+            const courseId = parseInt(document.getElementById('video-course').value);
+            const url = document.getElementById('video-url').value;
+            const description = document.getElementById('video-description-admin').value;
+            
+            if (title && courseId && url && description) {
+                // Thêm video mới (trong thực tế sẽ gửi request đến server)
+                const course = sampleData.courses.find(c => c.id === courseId);
+                if (course) {
+                    const newVideo = {
+                        id: course.lessons.length + 1,
+                        title: title,
+                        videoUrl: url,
+                        description: description
+                    };
+                    
+                    course.lessons.push(newVideo);
+                    
+                    // Cập nhật giao diện
+                    updateAdminPanel();
+                    hideAddVideoForm();
+                    
+                    // Reset form
+                    document.getElementById('video-title').value = '';
+                    document.getElementById('video-url').value = '';
+                    document.getElementById('video-description-admin').value = '';
+                    
+                    showToast('Đã thêm video mới thành công!', 'success');
+                }
+            } else {
+                showToast('Vui lòng nhập đầy đủ thông tin.', 'error');
+            }
+        }
+
+        // Lấy tên cấp độ
+        function getLevelName(level) {
+            const levelNames = {
+                'basic': 'Cơ bản',
+                'elementary': 'Sơ cấp',
+                'intermediate': 'Trung cấp',
+                'advanced': 'Cao cấp',
+                'proficient': 'Thành thạo'
+            };
+            
+            return levelNames[level] || 'Chưa xác định';
+        }
+
+        // Hiển thị thông báo toast
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type;
+            toast.classList.add('active');
+            
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
+        }
 
         // Theme Toggle
         const themeToggle = document.getElementById('theme-toggle');
@@ -1745,26 +3133,6 @@
         
         document.getElementById('daily-quote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
 
-        // Loading and Toast Functions
-        function showLoading() {
-            document.getElementById('loading').classList.add('active');
-        }
-        
-        function hideLoading() {
-            document.getElementById('loading').classList.remove('active');
-        }
-        
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = 'toast ' + type;
-            toast.classList.add('active');
-            
-            setTimeout(() => {
-                toast.classList.remove('active');
-            }, 3000);
-        }
-        
         // Modal Functions
         const modal = document.getElementById('modal');
         const closeModal = document.getElementById('close-modal');
@@ -1783,141 +3151,6 @@
             document.getElementById('modal-title').textContent = title;
             document.getElementById('modal-body').innerHTML = content;
             modal.classList.add('active');
-        }
-
-        // Other functions from previous implementation would go here
-        // For brevity, I'm including a simplified version
-        
-        let currentUser = null;
-        
-        function showPage(pageId) {
-            showLoading();
-            
-            // Update active nav link
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            document.querySelectorAll(`[onclick="showPage('${pageId}')"]`).forEach(link => {
-                link.classList.add('active');
-            });
-            
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // Show selected page after a short delay to simulate loading
-            setTimeout(() => {
-                document.getElementById(pageId).classList.add('active');
-                hideLoading();
-                
-                // Close mobile menu if open
-                mobileMenu.classList.remove('active');
-                overlay.classList.remove('active');
-            }, 500);
-        }
-        
-        function startLearning() {
-            if (currentUser) {
-                showPage('dashboard');
-            } else {
-                showPage('survey');
-            }
-        }
-        
-        function login() {
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            
-            if (email && password) {
-                showLoading();
-                
-                // Simulate API call
-                setTimeout(() => {
-                    currentUser = {
-                        id: Date.now(),
-                        name: "Người dùng Zlearn",
-                        email: email,
-                        level: 'basic',
-                        completedCourses: 0,
-                        completedTests: 0,
-                        averageScore: 0
-                    };
-                    
-                    // Update UI
-                    document.getElementById('login-btn').style.display = 'none';
-                    document.getElementById('register-btn').style.display = 'none';
-                    document.getElementById('logout-btn').style.display = 'inline-block';
-                    document.getElementById('mobile-login-btn').style.display = 'none';
-                    document.getElementById('mobile-register-btn').style.display = 'none';
-                    document.getElementById('mobile-logout-btn').style.display = 'flex';
-                    
-                    showPage('dashboard');
-                    showToast('Đăng nhập thành công!', 'success');
-                    hideLoading();
-                }, 1000);
-            } else {
-                showToast('Vui lòng nhập đầy đủ thông tin.', 'error');
-            }
-        }
-        
-        function register() {
-            const name = document.getElementById('register-name').value;
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            const confirm = document.getElementById('register-confirm').value;
-            
-            if (name && email && password && confirm) {
-                if (password !== confirm) {
-                    showToast('Mật khẩu xác nhận không khớp.', 'error');
-                    return;
-                }
-                
-                showLoading();
-                
-                // Simulate API call
-                setTimeout(() => {
-                    currentUser = {
-                        id: Date.now(),
-                        name: name,
-                        email: email,
-                        level: 'basic',
-                        completedCourses: 0,
-                        completedTests: 0,
-                        averageScore: 0
-                    };
-                    
-                    // Update UI
-                    document.getElementById('login-btn').style.display = 'none';
-                    document.getElementById('register-btn').style.display = 'none';
-                    document.getElementById('logout-btn').style.display = 'inline-block';
-                    document.getElementById('mobile-login-btn').style.display = 'none';
-                    document.getElementById('mobile-register-btn').style.display = 'none';
-                    document.getElementById('mobile-logout-btn').style.display = 'flex';
-                    
-                    showPage('survey');
-                    showToast('Đăng ký thành công! Hãy làm bài khảo sát để xác định trình độ.', 'success');
-                    hideLoading();
-                }, 1000);
-            } else {
-                showToast('Vui lòng nhập đầy đủ thông tin.', 'error');
-            }
-        }
-        
-        function logout() {
-            currentUser = null;
-            
-            // Update UI
-            document.getElementById('login-btn').style.display = 'inline-block';
-            document.getElementById('register-btn').style.display = 'inline-block';
-            document.getElementById('logout-btn').style.display = 'none';
-            document.getElementById('mobile-login-btn').style.display = 'flex';
-            document.getElementById('mobile-register-btn').style.display = 'flex';
-            document.getElementById('mobile-logout-btn').style.display = 'none';
-            
-            showPage('home');
-            showToast('Đã đăng xuất.', 'success');
         }
 
         // Initialize
