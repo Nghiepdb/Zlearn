@@ -1486,6 +1486,417 @@
             margin: 0;
             width: 100%;
         }
+        /* Dictionary Specific Styles */
+.dictionary-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.dictionary-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Search Box */
+.search-container {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: var(--card-bg);
+  border-radius: 50px;
+  padding: 5px;
+  box-shadow: 0 5px 20px var(--shadow);
+  border: 2px solid transparent;
+  transition: var(--transition);
+}
+
+.search-box:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 5px 25px rgba(67, 97, 238, 0.2);
+}
+
+.search-icon {
+  padding: 0 15px;
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  padding: 15px 10px;
+  background: transparent;
+  font-size: 1.1rem;
+  color: var(--text);
+  outline: none;
+}
+
+.search-btn {
+  border-radius: 50px;
+  padding: 12px 25px;
+  white-space: nowrap;
+}
+
+.search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--card-bg);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px var(--shadow);
+  margin-top: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 100;
+  display: none;
+}
+
+.search-suggestion {
+  padding: 12px 20px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  transition: var(--transition);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-suggestion:hover {
+  background: rgba(67, 97, 238, 0.05);
+}
+
+.search-suggestion:last-child {
+  border-bottom: none;
+}
+
+/* Dictionary Layout */
+.dictionary-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.word-lists-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.word-category {
+  background: var(--card-bg);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 5px 15px var(--shadow);
+}
+
+.word-category h3 {
+  color: var(--primary);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+}
+
+.word-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.word-list-item {
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.word-list-item:hover {
+  background: rgba(67, 97, 238, 0.05);
+  transform: translateX(5px);
+}
+
+.word-list-item .word {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.word-list-item .meaning {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Word Detail Card */
+.word-detail-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px var(--shadow);
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.word-detail-placeholder {
+  text-align: center;
+  color: #666;
+}
+
+.word-detail-content {
+  width: 100%;
+  animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.word-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid rgba(67, 97, 238, 0.1);
+}
+
+.word-title h1 {
+  margin-bottom: 10px;
+}
+
+.word-meta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.phonetic {
+  color: var(--success);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.pronounce-btn-large {
+  background: var(--primary);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.pronounce-btn-large:hover {
+  background: var(--primary-light);
+  transform: scale(1.1);
+}
+
+.word-type-badge {
+  background: linear-gradient(135deg, var(--primary), var(--success));
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.meaning-section, .example-section, .related-section {
+  margin-bottom: 25px;
+}
+
+.meaning-section h3, .example-section h3, .related-section h3 {
+  color: var(--primary);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+}
+
+.meaning-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text);
+  padding: 15px;
+  background: rgba(67, 97, 238, 0.05);
+  border-radius: 10px;
+  border-left: 4px solid var(--primary);
+}
+
+.example-box {
+  background: rgba(76, 201, 240, 0.05);
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 4px solid var(--success);
+}
+
+.example-text {
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text);
+  margin: 0;
+}
+
+.related-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.related-word {
+  background: var(--light);
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.9rem;
+  border: 1px solid #ddd;
+}
+
+.related-word:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.word-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* Quick Categories */
+.quick-categories {
+  margin-top: 40px;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.category-item {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 5px 15px var(--shadow);
+  border: 2px solid transparent;
+}
+
+.category-item:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary);
+  box-shadow: 0 10px 25px var(--shadow);
+}
+
+.category-item i {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.category-item span {
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .dictionary-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .word-lists-sidebar {
+    order: 2;
+  }
+  
+  .word-detail-main {
+    order: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .search-box {
+    flex-direction: column;
+    border-radius: 15px;
+    padding: 15px;
+  }
+  
+  .search-box input {
+    margin: 10px 0;
+    text-align: center;
+  }
+  
+  .word-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .word-actions {
+    flex-direction: column;
+  }
+  
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .dictionary-container {
+    padding: 10px;
+  }
+  
+  .word-detail-card {
+    padding: 20px;
+  }
+  
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+}
     </style>
 </head>
 <body>
@@ -1518,6 +1929,7 @@
                 <li><a href="#" class="nav-link active" onclick="showPage('home')">Trang chủ</a></li>
                 <li><a href="#" class="nav-link" onclick="showPage('dashboard')">Học tập</a></li>
                 <li><a href="#" class="nav-link" onclick="showPage('certificate')">Chứng chỉ</a></li>
+                <li><a href="#" class="nav-link" onclick="showPage('dictionary')">Từ điển</a></li>
                 <li><a href="#" class="nav-link" onclick="showPage('admin-login')">Quản trị</a></li>
             </ul>
         </nav>
@@ -1549,6 +1961,7 @@
                     <li><a href="#" class="nav-link active" onclick="showPage('home')">Trang chủ</a></li>
                     <li><a href="#" class="nav-link" onclick="showPage('dashboard')">Học tập</a></li>
                     <li><a href="#" class="nav-link" onclick="showPage('certificate')">Chứng chỉ</a></li>
+                    <li><a href="#" class="nav-link" onclick="showPage('dictionary')">Từ điển</a></li>
                     <li><a href="#" class="nav-link" onclick="showPage('admin-login')">Quản trị</a></li>
                 </ul>
             </nav>
@@ -1964,6 +2377,145 @@
             </div>
         </div>
 
+        <!-- Replace the entire dictionary page content -->
+<div id="dictionary" class="page">
+  <div class="dictionary-container">
+    <div class="dictionary-header">
+      <h2 style="text-align:center; color:var(--primary); margin-bottom:10px;">Từ Điển Anh - Việt Zlearn</h2>
+      <p style="text-align:center; margin-bottom:30px; color:var(--text);">Tra cứu từ vựng tiếng Anh với phiên âm, nghĩa tiếng Việt và ví dụ minh họa</p>
+    </div>
+    
+    <!-- Search Section -->
+    <div class="search-container">
+      <div class="search-box">
+        <i class="fas fa-search search-icon"></i>
+        <input id="dictionary-search" type="text" placeholder="Nhập từ tiếng Anh cần tra cứu..." autocomplete="off">
+        <button class="btn search-btn" onclick="searchWord()">
+          <i class="fas fa-search"></i>
+          Tìm kiếm
+        </button>
+      </div>
+      <div class="search-suggestions" id="search-suggestions"></div>
+    </div>
+
+    <!-- Dictionary Layout -->
+    <div class="dictionary-layout">
+      <!-- Left Sidebar - Word Lists -->
+      <div class="word-lists-sidebar">
+        <!-- Featured Words -->
+        <div class="word-category">
+          <h3><i class="fas fa-star"></i> Từ nổi bật</h3>
+          <div class="word-list" id="featured-words">
+            <!-- Featured words will be populated by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Common Words -->
+        <div class="word-category">
+          <h3><i class="fas fa-fire"></i> Từ thông dụng</h3>
+          <div class="word-list" id="common-words">
+            <!-- Common words will be populated by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Recent Searches -->
+        <div class="word-category">
+          <h3><i class="fas fa-history"></i> Tìm kiếm gần đây</h3>
+          <div class="word-list" id="recent-words">
+            <!-- Recent searches will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content - Word Detail -->
+      <div class="word-detail-main">
+        <div class="word-detail-card" id="word-detail-card">
+          <div class="word-detail-placeholder" id="word-detail-placeholder">
+            <i class="fas fa-book-open" style="font-size:4rem; color:#ddd; margin-bottom:20px;"></i>
+            <h3 style="color:#666;">Chào mừng đến với Từ điển Zlearn</h3>
+            <p style="color:#888;">Nhập từ cần tra cứu hoặc chọn một từ trong danh sách để xem chi tiết</p>
+          </div>
+          
+          <div class="word-detail-content" id="word-detail-content" style="display:none;">
+            <!-- Word Header -->
+            <div class="word-header">
+              <div class="word-title">
+                <h1 id="detail-word" style="color:var(--primary); margin:0; font-size:2.2rem;"></h1>
+                <div class="word-meta">
+                  <span id="detail-phonetic" class="phonetic"></span>
+                  <button class="pronounce-btn-large" onclick="pronounceWord(currentDetailWord)">
+                    <i class="fas fa-volume-up"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="word-type-badge" id="detail-type"></div>
+            </div>
+
+            <!-- Word Meaning -->
+            <div class="meaning-section">
+              <h3><i class="fas fa-language"></i> Nghĩa tiếng Việt</h3>
+              <p id="detail-meaning" class="meaning-text"></p>
+            </div>
+
+            <!-- Example -->
+            <div class="example-section">
+              <h3><i class="fas fa-comment"></i> Ví dụ</h3>
+              <div class="example-box">
+                <p id="detail-example" class="example-text"></p>
+              </div>
+            </div>
+
+            <!-- Related Words -->
+            <div class="related-section">
+              <h3><i class="fas fa-link"></i> Từ liên quan</h3>
+              <div class="related-words" id="related-words">
+                <!-- Related words will be populated by JavaScript -->
+              </div>
+            </div>
+
+            <!-- Word Actions -->
+            <div class="word-actions">
+              <button class="btn btn-outline" onclick="addToFlashcards()">
+                <i class="fas fa-plus"></i> Thêm vào thẻ học
+              </button>
+              <button class="btn btn-outline" onclick="shareWord()">
+                <i class="fas fa-share"></i> Chia sẻ
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Categories -->
+    <div class="quick-categories">
+      <h3 style="text-align:center; margin:40px 0 20px; color:var(--primary);">Danh mục nhanh</h3>
+      <div class="category-grid">
+        <div class="category-item" onclick="filterByCategory('noun')">
+          <i class="fas fa-file-word"></i>
+          <span>Danh từ</span>
+        </div>
+        <div class="category-item" onclick="filterByCategory('verb')">
+          <i class="fas fa-running"></i>
+          <span>Động từ</span>
+        </div>
+        <div class="category-item" onclick="filterByCategory('adjective')">
+          <i class="fas fa-palette"></i>
+          <span>Tính từ</span>
+        </div>
+        <div class="category-item" onclick="filterByCategory('adverb')">
+          <i class="fas fa-bolt"></i>
+          <span>Trạng từ</span>
+        </div>
+        <div class="category-item" onclick="showAllWords()">
+          <i class="fas fa-th-list"></i>
+          <span>Tất cả</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
         <!-- Admin Login Page -->
         <div id="admin-login" class="page">
             <div class="survey-container">
@@ -2163,6 +2715,7 @@
         
         // Dữ liệu mẫu - ĐÃ ĐƯỢC CẬP NHẬT VỚI NHIỀU VIDEO VÀ NỘI DUNG
         const sampleData = {
+            
             users: [
                 { id: 1, name: "Nguyễn Văn A", email: "a@example.com", level: "intermediate", completedCourses: 3 },
                 { id: 2, name: "Trần Thị B", email: "b@example.com", level: "elementary", completedCourses: 1 },
@@ -2794,7 +3347,62 @@
                     ]
                 });
             }
-            
+            // ========== ENHANCED DICTIONARY DATA - THÊM SAU sampleData ==========
+
+// Enhanced dictionary words data
+const enhancedDictionaryWords = [
+    { word: "computer", meaning: "máy tính", example: "I use a computer for work every day.", type: "noun", pronunciation: "kəmˈpjuːtər" },
+    { word: "beautiful", meaning: "đẹp", example: "She has a beautiful smile.", type: "adjective", pronunciation: "ˈbjuːtɪfəl" },
+    { word: "quickly", meaning: "một cách nhanh chóng", example: "He ran quickly to catch the bus.", type: "adverb", pronunciation: "ˈkwɪkli" },
+    { word: "understand", meaning: "hiểu", example: "Do you understand this lesson?", type: "verb", pronunciation: "ˌʌndərˈstænd" },
+    { word: "happiness", meaning: "hạnh phúc", example: "Money doesn't always bring happiness.", type: "noun", pronunciation: "ˈhæpinəs" },
+    { word: "important", meaning: "quan trọng", example: "It's important to study every day.", type: "adjective", pronunciation: "ɪmˈpɔːrtənt" },
+    { word: "carefully", meaning: "một cách cẩn thận", example: "Read the instructions carefully.", type: "adverb", pronunciation: "ˈkerfəli" },
+    { word: "development", meaning: "sự phát triển", example: "The development of technology is rapid.", type: "noun", pronunciation: "dɪˈveləpmənt" },
+    { word: "education", meaning: "giáo dục", example: "Education is the key to success.", type: "noun", pronunciation: "ˌedʒuˈkeɪʃən" },
+    { word: "environment", meaning: "môi trường", example: "We must protect our environment.", type: "noun", pronunciation: "ɪnˈvaɪrənmənt" },
+    { word: "information", meaning: "thông tin", example: "We need more information about this topic.", type: "noun", pronunciation: "ˌɪnfərˈmeɪʃən" },
+    { word: "knowledge", meaning: "kiến thức", example: "Reading books increases your knowledge.", type: "noun", pronunciation: "ˈnɑːlɪdʒ" },
+    { word: "language", meaning: "ngôn ngữ", example: "English is an international language.", type: "noun", pronunciation: "ˈlæŋɡwɪdʒ" },
+    { word: "learning", meaning: "việc học", example: "Learning new things is exciting.", type: "noun", pronunciation: "ˈlɜːrnɪŋ" },
+    { word: "practice", meaning: "thực hành", example: "Practice makes perfect.", type: "noun", pronunciation: "ˈpræktɪs" },
+    { word: "pronunciation", meaning: "phát âm", example: "Your pronunciation is very good.", type: "noun", pronunciation: "prəˌnʌnsiˈeɪʃən" },
+    { word: "vocabulary", meaning: "từ vựng", example: "I need to improve my vocabulary.", type: "noun", pronunciation: "vəˈkæbjəleri" },
+    { word: "grammar", meaning: "ngữ pháp", example: "English grammar can be difficult.", type: "noun", pronunciation: "ˈɡræmər" },
+    { word: "communication", meaning: "giao tiếp", example: "Good communication is essential.", type: "noun", pronunciation: "kəˌmjuːnɪˈkeɪʃən" },
+    { word: "conversation", meaning: "cuộc trò chuyện", example: "We had an interesting conversation.", type: "noun", pronunciation: "ˌkɑːnvərˈseɪʃən" }
+];
+
+// Update the existing initializeDictionary function to use enhanced data
+function initializeDictionary() {
+    dictionaryWords = [];
+    
+    // Add enhanced words first
+    enhancedDictionaryWords.forEach(word => {
+        dictionaryWords.push(word);
+    });
+    
+    // Then add vocabulary from courses (avoid duplicates)
+    sampleData.courses.forEach(course => {
+        course.lessons.forEach(lesson => {
+            if (lesson.vocabulary) {
+                lesson.vocabulary.forEach(vocab => {
+                    if (!dictionaryWords.find(w => w.word.toLowerCase() === vocab.word.toLowerCase())) {
+                        dictionaryWords.push({
+                            word: vocab.word,
+                            meaning: vocab.meaning,
+                            example: vocab.example,
+                            type: 'noun', // Default type
+                            pronunciation: vocab.word
+                        });
+                    }
+                });
+            }
+        });
+    });
+    
+    updateDictionaryUI();
+}
             sampleData.courses.push({
                 id: i,
                 name: `Khóa học ${level === "basic" ? "Cơ bản" : level === "intermediate" ? "Trung cấp" : "Nâng cao"} ${i}`,
@@ -2803,6 +3411,8 @@
                 lessons: lessons
             });
         }
+
+        
 
         // Biến toàn cục
         let currentUser = null;
@@ -2848,6 +3458,20 @@
             } else if (pageId === 'admin-panel') {
                 updateAdminPanel();
             }
+
+            if (pageId === 'survey') {
+        currentQuestionIndex = 0;
+        surveyAnswers = [];
+        showQuestion(currentQuestionIndex);
+    } else if (pageId === 'dashboard') {
+        updateDashboard();
+    } else if (pageId === 'certificate') {
+        checkCertificate();
+    } else if (pageId === 'admin-panel') {
+        updateAdminPanel();
+    } else if (pageId === 'dictionary') {
+        // Không cần làm gì thêm, UI đã được khởi tạo
+    }
         }
 
         // Hiển thị câu hỏi khảo sát
@@ -3679,6 +4303,8 @@
             }
         }
 
+        
+
         // Lấy tên cấp độ
         function getLevelName(level) {
             const levelNames = {
@@ -3792,8 +4418,445 @@
         });
         
         function initializeUI() {
+            initializeDictionary();
             // Add any additional UI initialization here
         }
+
+        // Dictionary Functions
+let dictionaryWords = [];
+
+// Khởi tạo từ điển
+function initializeDictionary() {
+    dictionaryWords = [];
+    
+    // Thu thập tất cả từ vựng từ các khóa học
+    sampleData.courses.forEach(course => {
+        course.lessons.forEach(lesson => {
+            if (lesson.vocabulary) {
+                lesson.vocabulary.forEach(vocab => {
+                    // Kiểm tra xem từ đã tồn tại chưa
+                    if (!dictionaryWords.find(w => w.word.toLowerCase() === vocab.word.toLowerCase())) {
+                        dictionaryWords.push({
+                            word: vocab.word,
+                            meaning: vocab.meaning,
+                            example: vocab.example,
+                            type: 'noun', // Mặc định, có thể cải thiện sau
+                            pronunciation: vocab.word // Có thể thêm phiên âm thực tế
+                        });
+                    }
+                });
+            }
+        });
+    });
+    
+    // Thêm một số từ mẫu nếu cần
+    const additionalWords = [
+        { word: "computer", meaning: "máy tính", example: "I use a computer for work.", type: "noun", pronunciation: "computer" },
+        { word: "beautiful", meaning: "đẹp", example: "She has a beautiful smile.", type: "adjective", pronunciation: "beautiful" },
+        { word: "quickly", meaning: "một cách nhanh chóng", example: "He ran quickly to catch the bus.", type: "adverb", pronunciation: "quickly" },
+        { word: "understand", meaning: "hiểu", example: "Do you understand this lesson?", type: "verb", pronunciation: "understand" },
+        { word: "happiness", meaning: "hạnh phúc", example: "Money doesn't always bring happiness.", type: "noun", pronunciation: "happiness" },
+        { word: "important", meaning: "quan trọng", example: "It's important to study every day.", type: "adjective", pronunciation: "important" }
+    ];
+    
+    additionalWords.forEach(word => {
+        if (!dictionaryWords.find(w => w.word.toLowerCase() === word.word.toLowerCase())) {
+            dictionaryWords.push(word);
+        }
+    });
+    
+    updateDictionaryUI();
+}
+
+// Cập nhật giao diện từ điển
+function updateDictionaryUI() {
+    // Hiển thị từ nổi bật (6 từ đầu tiên)
+    const featuredContainer = document.getElementById('featured-words');
+    featuredContainer.innerHTML = '';
+    
+    const featuredWords = dictionaryWords.slice(0, 6);
+    featuredWords.forEach(word => {
+        const wordCard = document.createElement('div');
+        wordCard.className = 'feature-card';
+        wordCard.style.cursor = 'pointer';
+        wordCard.onclick = () => showWordDetail(word);
+        
+        wordCard.innerHTML = `
+            <div class="feature-icon">
+                <i class="fas fa-book"></i>
+            </div>
+            <h3>${word.word}</h3>
+            <p>${word.meaning}</p>
+        `;
+        
+        featuredContainer.appendChild(wordCard);
+    });
+    
+    // Hiển thị từ vựng khác (10 từ ngẫu nhiên)
+    const otherWordsContainer = document.getElementById('other-words');
+    otherWordsContainer.innerHTML = '';
+    
+    // Lấy 10 từ ngẫu nhiên (trừ các từ đã hiển thị ở featured)
+    const otherWords = [...dictionaryWords]
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 10);
+    
+    otherWords.forEach(word => {
+        const wordItem = document.createElement('div');
+        wordItem.className = 'vocab-item';
+        wordItem.style.cursor = 'pointer';
+        wordItem.onclick = () => showWordDetail(word);
+        
+        wordItem.innerHTML = `
+            <div class="vocab-front">
+                <div class="vocab-word">${word.word}</div>
+                <div class="vocab-pronunciation">
+                    <button class="pronounce-btn" onclick="event.stopPropagation(); pronounceWord('${word.word}')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                    <span>${word.type || 'noun'}</span>
+                </div>
+            </div>
+            <div class="vocab-back">
+                <div class="vocab-meaning">${word.meaning}</div>
+                <div class="vocab-example">${word.example}</div>
+                <div class="vocab-pronunciation">
+                    <button class="pronounce-btn" onclick="event.stopPropagation(); pronounceWord('${word.word}')">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                    <span>Nhấn để quay lại</span>
+                </div>
+            </div>
+        `;
+        
+        otherWordsContainer.appendChild(wordItem);
+    });
+}
+
+// Tìm kiếm từ
+function searchWord() {
+    const searchInput = document.getElementById('dictionary-search');
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    
+    if (!searchTerm) {
+        showToast('Vui lòng nhập từ cần tra cứu!', 'error');
+        return;
+    }
+    
+    const foundWord = dictionaryWords.find(word => 
+        word.word.toLowerCase() === searchTerm
+    );
+    
+    if (foundWord) {
+        showWordDetail(foundWord);
+        // Cuộn đến phần chi tiết
+        document.getElementById('word-detail').scrollIntoView({ behavior: 'smooth' });
+    } else {
+        showToast('Không tìm thấy từ này trong cơ sở dữ liệu.', 'error');
+        document.getElementById('word-detail').style.display = 'none';
+    }
+}
+
+// Hiển thị chi tiết từ
+function showWordDetail(word) {
+    const detailContainer = document.getElementById('word-detail');
+    
+    detailContainer.innerHTML = `
+        <div style="background: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px var(--shadow);">
+            <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 20px;">
+                <h3 style="color: var(--primary); margin: 0; font-size: 1.8rem;">${word.word}</h3>
+                <button class="btn" onclick="pronounceWord('${word.word}')">
+                    <i class="fas fa-volume-up"></i>
+                    Phát âm
+                </button>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: auto 1fr; gap: 15px; margin-bottom: 20px;">
+                <div style="font-weight: bold; color: var(--primary);">Phiên âm:</div>
+                <div>/${word.pronunciation || word.word}/</div>
+                
+                <div style="font-weight: bold; color: var(--primary);">Loại từ:</div>
+                <div>
+                    <span class="level-badge" style="background: var(--success);">
+                        <i class="fas fa-tag"></i>
+                        ${word.type || 'noun'}
+                    </span>
+                </div>
+                
+                <div style="font-weight: bold; color: var(--primary);">Nghĩa tiếng Việt:</div>
+                <div>${word.meaning}</div>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <div style="font-weight: bold; color: var(--primary); margin-bottom: 10px;">Ví dụ:</div>
+                <div style="background: rgba(67, 97, 238, 0.05); padding: 15px; border-radius: 8px; font-style: italic;">
+                    "${word.example}"
+                </div>
+            </div>
+        </div>
+    `;
+    
+    detailContainer.style.display = 'block';
+    
+    // Cập nhật ô tìm kiếm
+    document.getElementById('dictionary-search').value = word.word;
+}
+
+// Cho phép tìm kiếm bằng phím Enter
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('dictionary-search');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchWord();
+            }
+        });
+    }
+});
+// Dictionary enhanced functionality
+let currentDetailWord = '';
+let recentSearches = JSON.parse(localStorage.getItem('zlearn_recent_searches') || '[]');
+
+// Initialize dictionary with enhanced data
+function initializeDictionary() {
+    // ... (keep existing initialization code, but enhance with more word data)
+    
+    updateDictionaryUI();
+    updateRecentSearches();
+}
+
+// Enhanced search function with suggestions
+function searchWord() {
+    const searchInput = document.getElementById('dictionary-search');
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    
+    if (!searchTerm) {
+        showToast('Vui lòng nhập từ cần tra cứu!', 'error');
+        return;
+    }
+    
+    const foundWord = dictionaryWords.find(word => 
+        word.word.toLowerCase() === searchTerm
+    );
+    
+    if (foundWord) {
+        addToRecentSearches(foundWord);
+        showWordDetail(foundWord);
+    } else {
+        showToast('Không tìm thấy từ này trong từ điển.', 'error');
+        // Show similar words
+        showSimilarWords(searchTerm);
+    }
+}
+
+// Show word detail with enhanced information
+function showWordDetail(word) {
+    currentDetailWord = word.word;
+    
+    // Hide placeholder, show detail
+    document.getElementById('word-detail-placeholder').style.display = 'none';
+    document.getElementById('word-detail-content').style.display = 'block';
+    
+    // Update word details
+    document.getElementById('detail-word').textContent = word.word;
+    document.getElementById('detail-phonetic').textContent = `/${word.pronunciation || word.word}/`;
+    document.getElementById('detail-type').textContent = getWordTypeDisplay(word.type);
+    document.getElementById('detail-meaning').textContent = word.meaning;
+    document.getElementById('detail-example').textContent = word.example;
+    
+    // Show related words
+    showRelatedWords(word);
+    
+    // Scroll to detail section on mobile
+    if (window.innerWidth < 992) {
+        document.getElementById('word-detail-card').scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
+
+// Show related words
+function showRelatedWords(word) {
+    const relatedContainer = document.getElementById('related-words');
+    relatedContainer.innerHTML = '';
+    
+    // Find words with same type or similar meaning
+    const related = dictionaryWords
+        .filter(w => w.type === word.type && w.word !== word.word)
+        .slice(0, 6);
+    
+    if (related.length > 0) {
+        related.forEach(relatedWord => {
+            const relatedElement = document.createElement('div');
+            relatedElement.className = 'related-word';
+            relatedElement.textContent = relatedWord.word;
+            relatedElement.onclick = () => showWordDetail(relatedWord);
+            relatedContainer.appendChild(relatedElement);
+        });
+    } else {
+        relatedContainer.innerHTML = '<p style="color:#666; font-style:italic;">Không có từ liên quan</p>';
+    }
+}
+
+// Add to recent searches
+function addToRecentSearches(word) {
+    // Remove if already exists
+    recentSearches = recentSearches.filter(w => w.word !== word.word);
+    // Add to beginning
+    recentSearches.unshift(word);
+    // Keep only last 10
+    recentSearches = recentSearches.slice(0, 10);
+    // Save to localStorage
+    localStorage.setItem('zlearn_recent_searches', JSON.stringify(recentSearches));
+    // Update UI
+    updateRecentSearches();
+}
+
+// Update recent searches UI
+function updateRecentSearches() {
+    const recentContainer = document.getElementById('recent-words');
+    recentContainer.innerHTML = '';
+    
+    if (recentSearches.length === 0) {
+        recentContainer.innerHTML = '<p style="color:#666; font-style:italic; text-align:center;">Chưa có từ tìm kiếm</p>';
+        return;
+    }
+    
+    recentSearches.forEach(word => {
+        const item = document.createElement('div');
+        item.className = 'word-list-item';
+        item.innerHTML = `
+            <span class="word">${word.word}</span>
+            <span class="meaning">${word.meaning}</span>
+        `;
+        item.onclick = () => showWordDetail(word);
+        recentContainer.appendChild(item);
+    });
+}
+
+// Show similar words when search fails
+function showSimilarWords(searchTerm) {
+    const similar = dictionaryWords.filter(word => 
+        word.word.toLowerCase().includes(searchTerm) ||
+        word.meaning.toLowerCase().includes(searchTerm)
+    ).slice(0, 5);
+    
+    if (similar.length > 0) {
+        let message = 'Có thể bạn tìm: ';
+        message += similar.map(word => 
+            `<span style="color:var(--primary); cursor:pointer; text-decoration:underline;" 
+                  onclick="showWordDetail(${JSON.stringify(word).replace(/"/g, '&quot;')})">
+             ${word.word}
+             </span>`
+        ).join(', ');
+        
+        showToast(message, 'success', 5000);
+    }
+}
+
+// Enhanced word type display
+function getWordTypeDisplay(type) {
+    const typeMap = {
+        'noun': 'Danh từ',
+        'verb': 'Động từ',
+        'adjective': 'Tính từ',
+        'adverb': 'Trạng từ',
+        'preposition': 'Giới từ',
+        'conjunction': 'Liên từ',
+        'interjection': 'Thán từ'
+    };
+    return typeMap[type] || 'Từ vựng';
+}
+
+// Filter by category
+function filterByCategory(category) {
+    const filteredWords = dictionaryWords.filter(word => word.type === category).slice(0, 10);
+    updateWordLists(filteredWords, `${getWordTypeDisplay(category)} phổ biến`);
+}
+
+// Show all words
+function showAllWords() {
+    updateDictionaryUI();
+}
+
+// Update word lists
+function updateWordLists(words, title) {
+    const commonContainer = document.getElementById('common-words');
+    commonContainer.innerHTML = `<h3><i class="fas fa-list"></i> ${title}</h3>`;
+    
+    const wordList = document.createElement('div');
+    wordList.className = 'word-list';
+    
+    words.forEach(word => {
+        const item = document.createElement('div');
+        item.className = 'word-list-item';
+        item.innerHTML = `
+            <span class="word">${word.word}</span>
+            <span class="meaning">${word.meaning}</span>
+        `;
+        item.onclick = () => showWordDetail(word);
+        wordList.appendChild(item);
+    });
+    
+    commonContainer.appendChild(wordList);
+}
+
+// Add to flashcards
+function addToFlashcards() {
+    if (currentDetailWord) {
+        showToast(`Đã thêm "${currentDetailWord}" vào thẻ học`, 'success');
+        // In a real app, you would save this to user's flashcards
+    }
+}
+
+// Share word
+function shareWord() {
+    if (currentDetailWord) {
+        if (navigator.share) {
+            navigator.share({
+                title: `Từ vựng: ${currentDetailWord}`,
+                text: `Học từ "${currentDetailWord}" trên Zlearn`,
+                url: window.location.href
+            });
+        } else {
+            showToast('Đã sao chép từ vựng để chia sẻ', 'success');
+            // Fallback: copy to clipboard
+        }
+    }
+}
+
+// Enhanced toast with HTML support
+function showToast(message, type = 'success', duration = 3000) {
+    const toast = document.getElementById('toast');
+    toast.innerHTML = message;
+    toast.className = 'toast ' + type;
+    toast.classList.add('active');
+    
+    setTimeout(() => {
+        toast.classList.remove('active');
+    }, duration);
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    initializeDictionary();
+    
+    // Add Enter key support for search
+    const searchInput = document.getElementById('dictionary-search');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchWord();
+            }
+        });
+        
+        // Add input event for suggestions
+        searchInput.addEventListener('input', function() {
+            showSearchSuggestions(this.value);
+        });
+    }
+});
     </script>
 </body>
 </html>
