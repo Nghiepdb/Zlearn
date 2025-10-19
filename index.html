@@ -2837,7 +2837,7 @@
         const GEMINI_API_KEY = "AIzaSyCIwoa2OOyaArgJwDXvKcMVg57_PUVYI5k";
         const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
         
-        // Dữ liệu mẫu với nhiều khóa học và từ vựng
+        // Dữ liệu mẫu với cấu trúc khóa học theo file Word
         const sampleData = {
             users: [
                 { id: 1, name: "Nguyễn Văn A", email: "a@example.com", level: "intermediate", completedCourses: 3 },
@@ -2845,246 +2845,397 @@
                 { id: 3, name: "Lê Văn C", email: "c@example.com", level: "advanced", completedCourses: 5 }
             ],
             courses: [
+                // CẤP CƠ BẢN (3 phần, 5 video mỗi phần, tổng 15 video)
                 { 
                     id: 1, 
-                    name: "Tiếng Anh Giao Tiếp Cơ Bản", 
+                    name: "Tiếng Anh Cơ Bản - Phần 1: Phát âm & Giới thiệu", 
                     level: "basic", 
-                    description: "Khóa học dành cho người mới bắt đầu học tiếng Anh",
-                    lessons: [
-                        { 
-                            id: 1, 
-                            title: "Giới thiệu bản thân", 
-                            videoUrl: "https://www.youtube.com/embed/7Z0_NKp-COQ", 
-                            description: "Học cách giới thiệu bản thân bằng tiếng Anh",
-                            vocabulary: [
-                                { word: "hello", meaning: "xin chào", example: "Hello, my name is John." },
-                                { word: "name", meaning: "tên", example: "What is your name?" },
-                                { word: "nice to meet you", meaning: "rất vui được gặp bạn", example: "Nice to meet you!" },
-                                { word: "how are you", meaning: "bạn có khỏe không", example: "How are you today?" },
-                                { word: "fine", meaning: "tốt, khỏe", example: "I'm fine, thank you." }
-                            ],
-                            grammar: "Trong bài học này, chúng ta học về cách sử dụng động từ 'to be' (am, is, are) trong câu giới thiệu bản thân. Ví dụ: I am John, She is a teacher, They are students.",
-                            test: [
-                                {
-                                    question: "Câu nào sau đây là đúng?",
-                                    options: ["I is a student", "I am a student", "I are a student", "I be a student"],
-                                    answer: 1
-                                },
-                                {
-                                    question: "Cách nói 'Rất vui được gặp bạn' trong tiếng Anh là gì?",
-                                    options: ["Goodbye", "Nice to meet you", "How are you", "Thank you"],
-                                    answer: 1
-                                },
-                                {
-                                    question: "Câu hỏi 'What is your name?' có nghĩa là gì?",
-                                    options: ["Bạn bao nhiêu tuổi?", "Bạn có khỏe không?", "Tên bạn là gì?", "Bạn đến từ đâu?"],
-                                    answer: 2
-                                }
-                            ]
-                        },
-                        { 
-                            id: 2, 
-                            title: "Chào hỏi và tạm biệt", 
-                            videoUrl: "https://www.youtube.com/embed/7Z0_NKp-COQ", 
-                            description: "Các cách chào hỏi và nói lời tạm biệt",
-                            vocabulary: [
-                                { word: "good morning", meaning: "chào buổi sáng", example: "Good morning, teacher!" },
-                                { word: "good afternoon", meaning: "chào buổi chiều", example: "Good afternoon, everyone." },
-                                { word: "good evening", meaning: "chào buổi tối", example: "Good evening, sir." },
-                                { word: "goodbye", meaning: "tạm biệt", example: "Goodbye, see you tomorrow!" },
-                                { word: "see you later", meaning: "hẹn gặp lại", example: "See you later, my friend." }
-                            ],
-                            grammar: "Bài học này tập trung vào các cách chào hỏi theo thời gian trong ngày. Chúng ta sử dụng 'Good morning' cho buổi sáng, 'Good afternoon' cho buổi chiều và 'Good evening' cho buổi tối.",
-                            test: [
-                                {
-                                    question: "Câu chào nào phù hợp cho buổi sáng?",
-                                    options: ["Good afternoon", "Good evening", "Good morning", "Good night"],
-                                    answer: 2
-                                },
-                                {
-                                    question: "'Goodbye' có nghĩa là gì?",
-                                    options: ["Xin chào", "Tạm biệt", "Cảm ơn", "Xin lỗi"],
-                                    answer: 1
-                                },
-                                {
-                                    question: "Câu nào sau đây là cách nói 'Hẹn gặp lại'?",
-                                    options: ["See you later", "Good morning", "How are you", "Nice to meet you"],
-                                    answer: 0
-                                }
-                            ]
-                        },
-                        { 
-                            id: 3, 
-                            title: "Hỏi và trả lời về thông tin cá nhân", 
-                            videoUrl: "https://www.youtube.com/embed/7Z0_NKp-COQ", 
-                            description: "Hỏi và trả lời các câu hỏi về thông tin cá nhân",
-                            vocabulary: [
-                                { word: "age", meaning: "tuổi", example: "What is your age?" },
-                                { word: "country", meaning: "đất nước", example: "Which country are you from?" },
-                                { word: "job", meaning: "công việc", example: "What is your job?" },
-                                { word: "hobby", meaning: "sở thích", example: "What are your hobbies?" },
-                                { word: "family", meaning: "gia đình", example: "How many people are in your family?" }
-                            ],
-                            grammar: "Trong bài này, chúng ta học về các từ để hỏi (question words): What (cái gì), Where (ở đâu), How (như thế nào), How old (bao nhiêu tuổi). Ví dụ: What is your name? Where are you from? How old are you?",
-                            test: [
-                                {
-                                    question: "Câu hỏi 'How old are you?' dùng để hỏi về điều gì?",
-                                    options: ["Tên", "Tuổi", "Nghề nghiệp", "Quốc gia"],
-                                    answer: 1
-                                },
-                                {
-                                    question: "Từ nào sau đây có nghĩa là 'sở thích'?",
-                                    options: ["Job", "Hobby", "Age", "Country"],
-                                    answer: 1
-                                },
-                                {
-                                    question: "Câu hỏi 'Where are you from?' có nghĩa là gì?",
-                                    options: ["Bạn đến từ đâu?", "Bạn bao nhiêu tuổi?", "Bạn làm nghề gì?", "Bạn có sở thích gì?"],
-                                    answer: 0
-                                }
-                            ]
-                        }
-                    ]
+                    description: "Làm quen với phát âm, chào hỏi và giới thiệu bản thân",
+                    lessons: generateLessons("basic", 1, 5, [
+                        "Phát âm bảng chữ cái và nguyên âm",
+                        "Chào hỏi cơ bản và tạm biệt",
+                        "Giới thiệu tên và quốc tịch",
+                        "Hỏi và trả lời về nghề nghiệp",
+                        "Số đếm từ 1-20 và tuổi tác"
+                    ])
                 },
                 { 
                     id: 2, 
-                    name: "Tiếng Anh cho Công việc", 
-                    level: "intermediate", 
-                    description: "Nâng cao kỹ năng tiếng Anh trong môi trường công sở",
-                    lessons: [
-                        { 
-                            id: 4, 
-                            title: "Tiếng Anh trong cuộc họp", 
-                            videoUrl: "https://www.youtube.com/embed/7Z0_NKp-COQ", 
-                            description: "Các mẫu câu thường dùng trong cuộc họp",
-                            vocabulary: [
-                                { word: "meeting", meaning: "cuộc họp", example: "We have a meeting at 9 AM." },
-                                { word: "agenda", meaning: "chương trình nghị sự", example: "Let's review the agenda." },
-                                { word: "presentation", meaning: "bài thuyết trình", example: "She will give a presentation." },
-                                { word: "discussion", meaning: "thảo luận", example: "We need more discussion on this topic." },
-                                { word: "conclusion", meaning: "kết luận", example: "What is the conclusion of our meeting?" }
-                            ],
-                            grammar: "Bài học này tập trung vào các cụm từ và mẫu câu thường dùng trong cuộc họp. Chúng ta học cách đưa ra ý kiến, đồng ý, không đồng ý và kết luận trong môi trường làm việc.",
-                            test: [
-                                {
-                                    question: "Từ nào có nghĩa là 'cuộc họp'?",
-                                    options: ["Agenda", "Meeting", "Presentation", "Discussion"],
-                                    answer: 1
-                                },
-                                {
-                                    question: "'Let's review the agenda' có nghĩa là gì?",
-                                    options: ["Hãy kết thúc cuộc họp", "Hãy xem lại chương trình nghị sự", "Hãy bắt đầu thuyết trình", "Hãy thảo luận về vấn đề này"],
-                                    answer: 1
-                                },
-                                {
-                                    question: "Từ nào có nghĩa là 'bài thuyết trình'?",
-                                    options: ["Meeting", "Agenda", "Presentation", "Conclusion"],
-                                    answer: 2
-                                }
-                            ]
-                        },
-                        { 
-                            id: 5, 
-                            title: "Viết email chuyên nghiệp", 
-                            videoUrl: "https://www.youtube.com/embed/7Z0_NKp-COQ", 
-                            description: "Học cách viết email bằng tiếng Anh chuyên nghiệp",
-                            vocabulary: [
-                                { word: "subject", meaning: "chủ đề", example: "Please write a clear subject." },
-                                { word: "attachment", meaning: "tệp đính kèm", example: "I've sent the attachment." },
-                                { word: "recipient", meaning: "người nhận", example: "The recipient will reply soon." },
-                                { word: "signature", meaning: "chữ ký", example: "Don't forget to add your signature." },
-                                { word: "forward", meaning: "chuyển tiếp", example: "Can you forward this email to John?" }
-                            ],
-                            grammar: "Trong bài này, chúng ta học về cấu trúc của một email chuyên nghiệp: lời chào, nội dung chính, kết thúc và chữ ký. Chúng ta cũng học các cụm từ thông dụng trong email công việc.",
-                            test: [
-                                {
-                                    question: "Từ nào có nghĩa là 'tệp đính kèm'?",
-                                    options: ["Subject", "Attachment", "Recipient", "Signature"],
-                                    answer: 1
-                                },
-                                {
-                                    question: "'Please find the attached file' có nghĩa là gì?",
-                                    options: ["Vui lòng trả lời email này", "Vui lòng xem tệp đính kèm", "Vui lòng chuyển tiếp email này", "Vui lòng thêm chữ ký"],
-                                    answer: 1
-                                },
-                                {
-                                    question: "Từ nào có nghĩa là 'chuyển tiếp'?",
-                                    options: ["Forward", "Attachment", "Recipient", "Subject"],
-                                    answer: 0
-                                }
-                            ]
-                        }
-                    ]
+                    name: "Tiếng Anh Cơ Bản - Phần 2: Thì hiện tại & Hoạt động", 
+                    level: "basic", 
+                    description: "Học thì hiện tại đơn và các hoạt động hàng ngày",
+                    lessons: generateLessons("basic", 2, 5, [
+                        "Thì hiện tại đơn với động từ 'to be'",
+                        "Đại từ nhân xưng và tính từ sở hữu",
+                        "Hoạt động hàng ngày và thời gian",
+                        "Mô tả gia đình và bạn bè",
+                        "Hỏi đường và chỉ dẫn đơn giản"
+                    ])
                 },
                 { 
                     id: 3, 
-                    name: "Luyện Phát Âm Chuẩn", 
+                    name: "Tiếng Anh Cơ Bản - Phần 3: Giao tiếp thực tế", 
+                    level: "basic", 
+                    description: "Thực hành giao tiếp trong các tình huống thực tế",
+                    lessons: generateLessons("basic", 3, 5, [
+                        "Mua sắm và hỏi giá",
+                        "Đặt món ăn trong nhà hàng",
+                        "Gọi taxi và hỏi đường",
+                        "Mô tả đồ vật và màu sắc",
+                        "Kiểm tra tổng kết cấp độ Cơ bản"
+                    ])
+                },
+
+                // CẤP SƠ CẤP (4 phần, 6 video mỗi phần, tổng 24 video)
+                { 
+                    id: 4, 
+                    name: "Tiếng Anh Sơ Cấp - Phần 1: Mở rộng từ vựng", 
+                    level: "elementary", 
+                    description: "Mở rộng vốn từ vựng và học thì quá khứ đơn",
+                    lessons: generateLessons("elementary", 1, 6, [
+                        "Từ vựng về gia đình và mối quan hệ",
+                        "Thì quá khứ đơn với động từ có quy tắc",
+                        "Động từ bất quy tắc thông dụng",
+                        "Mô tả sự kiện trong quá khứ",
+                        "Câu hỏi với 'Wh-' trong quá khứ",
+                        "Thực hành hội thoại về kỷ niệm"
+                    ])
+                },
+                { 
+                    id: 5, 
+                    name: "Tiếng Anh Sơ Cấp - Phần 2: Du lịch & Giao tiếp", 
+                    level: "elementary", 
+                    description: "Hội thoại du lịch và các tình huống giao tiếp",
+                    lessons: generateLessons("elementary", 2, 6, [
+                        "Từ vựng du lịch và phương tiện",
+                        "Đặt phòng khách sạn và dịch vụ",
+                        "Hỏi về thời tiết và khí hậu",
+                        "Chỉ đường và phương hướng",
+                        "Mua vé và đặt chỗ",
+                        "Xử lý tình huống du lịch"
+                    ])
+                },
+                { 
+                    id: 6, 
+                    name: "Tiếng Anh Sơ Cấp - Phần 3: Miêu tả & So sánh", 
+                    level: "elementary", 
+                    description: "Miêu tả người, cảm xúc và so sánh",
+                    lessons: generateLessons("elementary", 3, 6, [
+                        "Tính từ miêu tả ngoại hình",
+                        "Diễn đạt cảm xúc và tâm trạng",
+                        "So sánh hơn và so sánh nhất",
+                        "Viết tin nhắn và email đơn giản",
+                        "Mô tả sở thích và thói quen",
+                        "Kiểm tra tổng kết Sơ cấp"
+                    ])
+                },
+                { 
+                    id: 7, 
+                    name: "Tiếng Anh Sơ Cấp - Phần 4: Kỹ năng tổng hợp", 
+                    level: "elementary", 
+                    description: "Tổng hợp và thực hành các kỹ năng sơ cấp",
+                    lessons: generateLessons("elementary", 4, 6, [
+                        "Ôn tập ngữ pháp sơ cấp",
+                        "Luyện nghe hội thoại hàng ngày",
+                        "Thực hành phát âm nâng cao",
+                        "Viết đoạn văn ngắn",
+                        "Phản xạ giao tiếp nhanh",
+                        "Đánh giá cuối cấp độ Sơ cấp"
+                    ])
+                },
+
+                // CẤP TRUNG CẤP (5 phần, 6 video mỗi phần, tổng 30 video)
+                { 
+                    id: 8, 
+                    name: "Tiếng Anh Trung Cấp - Phần 1: Ngữ pháp nâng cao", 
+                    level: "intermediate", 
+                    description: "Học cấu trúc câu phức và thì hiện tại hoàn thành",
+                    lessons: generateLessons("intermediate", 1, 6, [
+                        "Thì hiện tại hoàn thành",
+                        "Câu điều kiện loại 1 và 2",
+                        "Mệnh đề quan hệ xác định",
+                        "Câu bị động ở thì hiện tại",
+                        "Liên từ và trạng từ liên kết",
+                        "Thực hành viết câu phức"
+                    ])
+                },
+                { 
+                    id: 9, 
+                    name: "Tiếng Anh Trung Cấp - Phần 2: Giao tiếp công việc", 
+                    level: "intermediate", 
+                    description: "Hội thoại công việc và mô tả sự kiện",
+                    lessons: generateLessons("intermediate", 2, 6, [
+                        "Từ vựng văn phòng và công việc",
+                        "Thuyết trình ý tưởng đơn giản",
+                        "Mô tả dự án và kế hoạch",
+                        "Kể chuyện và tường thuật sự kiện",
+                        "Thảo luận nhóm trong công việc",
+                        "Viết báo cáo ngắn"
+                    ])
+                },
+                { 
+                    id: 10, 
+                    name: "Tiếng Anh Trung Cấp - Phần 3: Kỹ năng viết", 
+                    level: "intermediate", 
+                    description: "Phát triển kỹ năng viết và thành ngữ",
+                    lessons: generateLessons("intermediate", 3, 6, [
+                        "Viết đoạn văn mô tả",
+                        "Thành ngữ thông dụng trong giao tiếp",
+                        "Luyện nghe tin tức và báo cáo",
+                        "Viết email công việc chuyên nghiệp",
+                        "Phân tích văn bản ngắn",
+                        "Thực hành viết luận ngắn"
+                    ])
+                },
+                { 
+                    id: 11, 
+                    name: "Tiếng Anh Trung Cấp - Phần 4: Nghe nâng cao", 
+                    level: "intermediate", 
+                    description: "Luyện nghe nâng cao và phản xạ",
+                    lessons: generateLessons("intermediate", 4, 6, [
+                        "Nghe hiểu tin tức quốc tế",
+                        "Phân tích hội thoại phức tạp",
+                        "Luyện nghe accent khác nhau",
+                        "Ghi chú khi nghe bài giảng",
+                        "Phản xạ với câu hỏi phức tạp",
+                        "Thực hành nghe tổng hợp"
+                    ])
+                },
+                { 
+                    id: 12, 
+                    name: "Tiếng Anh Trung Cấp - Phần 5: Tổng hợp trung cấp", 
+                    level: "intermediate", 
+                    description: "Tổng hợp và đánh giá kỹ năng trung cấp",
+                    lessons: generateLessons("intermediate", 5, 6, [
+                        "Ôn tập ngữ pháp trung cấp",
+                        "Luyện nói theo chủ đề phức tạp",
+                        "Viết bài luận 250 từ",
+                        "Phân tích và thảo luận vấn đề",
+                        "Kỹ năng thuyết trình cơ bản",
+                        "Kiểm tra tổng kết Trung cấp"
+                    ])
+                },
+
+                // CẤP CAO CẤP (6 phần, 7 video mỗi phần, tổng 42 video)
+                { 
+                    id: 13, 
+                    name: "Tiếng Anh Cao Cấp - Phần 1: Ngữ pháp chuyên sâu", 
                     level: "advanced", 
-                    description: "Cải thiện phát âm và ngữ điệu tiếng Anh",
-                    lessons: [
-                        { 
-                            id: 6, 
-                            title: "Nguyên âm và phụ âm", 
-                            videoUrl: "https://www.youtube.com/embed/7Z0_NKp-COQ", 
-                            description: "Học cách phát âm chuẩn các nguyên âm và phụ âm",
-                            vocabulary: [
-                                { word: "vowel", meaning: "nguyên âm", example: "A, E, I, O, U are vowels." },
-                                { word: "consonant", meaning: "phụ âm", example: "B, C, D, F are consonants." },
-                                { word: "pronunciation", meaning: "phát âm", example: "Your pronunciation is good." },
-                                { word: "accent", meaning: "giọng", example: "She has a British accent." },
-                                { word: "syllable", meaning: "âm tiết", example: "The word 'apple' has two syllables." }
-                            ],
-                            grammar: "Bài học này tập trung vào cách phát âm các nguyên âm và phụ âm trong tiếng Anh. Chúng ta học về vị trí của lưỡi, môi và cách tạo ra âm thanh chính xác cho từng âm.",
-                            test: [
-                                {
-                                    question: "Từ nào có nghĩa là 'nguyên âm'?",
-                                    options: ["Vowel", "Consonant", "Pronunciation", "Accent"],
-                                    answer: 0
-                                },
-                                {
-                                    question: "Âm tiết là gì?",
-                                    options: ["Một phần của từ có một nguyên âm", "Cách phát âm một từ", "Giọng nói của người bản xứ", "Một loại phụ âm"],
-                                    answer: 0
-                                },
-                                {
-                                    question: "Từ nào có nghĩa là 'phát âm'?",
-                                    options: ["Vowel", "Consonant", "Pronunciation", "Syllable"],
-                                    answer: 2
-                                }
-                            ]
-                        },
-                        { 
-                            id: 7, 
-                            title: "Trọng âm và ngữ điệu", 
-                            videoUrl: "https://www.youtube.com/embed/7Z0_NKp-COQ", 
-                            description: "Luyện tập trọng âm và ngữ điệu trong câu",
-                            vocabulary: [
-                                { word: "stress", meaning: "trọng âm", example: "The stress is on the first syllable." },
-                                { word: "intonation", meaning: "ngữ điệu", example: "Your intonation is improving." },
-                                { word: "rhythm", meaning: "nhịp điệu", example: "English has a specific rhythm." },
-                                { word: "pitch", meaning: "cao độ", example: "Your pitch is too high." },
-                                { word: "emphasis", meaning: "sự nhấn mạnh", example: "Put emphasis on the key words." }
-                            ],
-                            grammar: "Trong bài học này, chúng ta học về trọng âm từ (word stress) và trọng âm câu (sentence stress). Chúng ta cũng thực hành ngữ điệu lên xuống trong câu hỏi và câu trần thuật.",
-                            test: [
-                                {
-                                    question: "Từ nào có nghĩa là 'trọng âm'?",
-                                    options: ["Intonation", "Stress", "Rhythm", "Pitch"],
-                                    answer: 1
-                                },
-                                {
-                                    question: "Ngữ điệu là gì?",
-                                    options: ["Cao độ của giọng nói", "Sự lên xuống của giọng khi nói", "Nhịp điệu của câu", "Cách nhấn mạnh từ quan trọng"],
-                                    answer: 1
-                                },
-                                {
-                                    question: "Từ nào có nghĩa là 'nhịp điệu'?",
-                                    options: ["Stress", "Intonation", "Rhythm", "Emphasis"],
-                                    answer: 2
-                                }
-                            ]
-                        }
-                    ]
+                    description: "Học ngữ pháp nâng cao và cấu trúc phức tạp",
+                    lessons: generateLessons("advanced", 1, 7, [
+                        "Câu điều kiện hỗn hợp",
+                        "Mệnh đề quan hệ không xác định",
+                        "Câu tường thuật nâng cao",
+                        "Thể bị động ở các thì phức tạp",
+                        "Đảo ngữ và cấu trúc nhấn mạnh",
+                        "Liên từ phức tạp",
+                        "Thực hành ngữ pháp tổng hợp"
+                    ])
+                },
+                { 
+                    id: 14, 
+                    name: "Tiếng Anh Cao Cấp - Phần 2: Thuyết trình chuyên nghiệp", 
+                    level: "advanced", 
+                    description: "Kỹ năng thuyết trình và phỏng vấn",
+                    lessons: generateLessons("advanced", 2, 7, [
+                        "Kỹ thuật thuyết trình hiệu quả",
+                        "Ngôn ngữ cơ thể trong thuyết trình",
+                        "Xử lý câu hỏi và phản biện",
+                        "Kỹ năng phỏng vấn xin việc",
+                        "Đàm phán và thương lượng",
+                        "Viết CV và thư xin việc",
+                        "Thực hành phỏng vấn mô phỏng"
+                    ])
+                },
+                { 
+                    id: 15, 
+                    name: "Tiếng Anh Cao Cấp - Phần 3: Viết học thuật", 
+                    level: "advanced", 
+                    description: "Phát triển kỹ năng viết học thuật",
+                    lessons: generateLessons("advanced", 3, 7, [
+                        "Cấu trúc bài luận học thuật",
+                        "Phương pháp nghiên cứu và trích dẫn",
+                        "Viết báo cáo chuyên nghiệp",
+                        "Văn phong học thuật và trang trọng",
+                        "Phân tích dữ liệu và biểu đồ",
+                        "Viết đề xuất dự án",
+                        "Chỉnh sửa và hoàn thiện văn bản"
+                    ])
+                },
+                { 
+                    id: 16, 
+                    name: "Tiếng Anh Cao Cấp - Phần 4: Giao tiếp đa văn hóa", 
+                    level: "advanced", 
+                    description: "Giao tiếp trong môi trường đa văn hóa",
+                    lessons: generateLessons("advanced", 4, 7, [
+                        "Hiểu biết văn hóa các nước nói tiếng Anh",
+                        "Giao tiếp trong môi trường quốc tế",
+                        "Xử lý xung đột văn hóa",
+                        "Thuyết phục và tạo ảnh hưởng",
+                        "Đàm phán đa văn hóa",
+                        "Kỹ năng lãnh đạo bằng tiếng Anh",
+                        "Case study giao tiếp đa văn hóa"
+                    ])
+                },
+                { 
+                    id: 17, 
+                    name: "Tiếng Anh Cao Cấp - Phần 5: Chuyên ngành", 
+                    level: "advanced", 
+                    description: "Tiếng Anh chuyên ngành và kỹ thuật",
+                    lessons: generateLessons("advanced", 5, 7, [
+                        "Từ vựng chuyên ngành kinh tế",
+                        "Thuật ngữ kỹ thuật và công nghệ",
+                        "Tiếng Anh y khoa và sức khỏe",
+                        "Ngôn ngữ pháp lý và hợp đồng",
+                        "Tiếng Anh trong giáo dục",
+                        "Thuật ngữ marketing và quảng cáo",
+                        "Thực hành đọc hiểu tài liệu chuyên ngành"
+                    ])
+                },
+                { 
+                    id: 18, 
+                    name: "Tiếng Anh Cao Cấp - Phần 6: Tổng hợp cao cấp", 
+                    level: "advanced", 
+                    description: "Tổng hợp và hoàn thiện kỹ năng cao cấp",
+                    lessons: generateLessons("advanced", 6, 7, [
+                        "Ôn tập ngữ pháp nâng cao",
+                        "Luyện nói chủ đề phức tạp",
+                        "Viết luận học thuật 500 từ",
+                        "Phân tích văn bản chuyên sâu",
+                        "Kỹ năng tranh luận và biện luận",
+                        "Thuyết trình chuyên nghiệp",
+                        "Kiểm tra tổng kết Cao cấp"
+                    ])
+                },
+
+                // CẤP THÀNH THẠO (8 phần, 8 video mỗi phần, tổng 64 video)
+                { 
+                    id: 19, 
+                    name: "Tiếng Anh Thành Thạo - Phần 1: Nghe đa dạng", 
+                    level: "proficient", 
+                    description: "Luyện nghe accent đa dạng và tốc độ tự nhiên",
+                    lessons: generateLessons("proficient", 1, 8, [
+                        "Nghe hiểu accent Anh - Mỹ",
+                        "Phân biệt accent Anh - Anh và Anh - Mỹ",
+                        "Kỹ thuật shadowing nâng cao",
+                        "Nghe tốc độ tự nhiên của người bản ngữ",
+                        "Phân tích phim ảnh và chương trình TV",
+                        "Nghe podcast và radio quốc tế",
+                        "Kỹ năng nghe lecture học thuật",
+                        "Thực hành nghe tổng hợp nâng cao"
+                    ])
+                },
+                { 
+                    id: 20, 
+                    name: "Tiếng Anh Thành Thạo - Phần 2: Thành ngữ nâng cao", 
+                    level: "proficient", 
+                    description: "Học thành ngữ và cụm động từ phức tạp",
+                    lessons: generateLessons("proficient", 2, 8, [
+                        "Thành ngữ trong văn nói hàng ngày",
+                        "Cụm động từ nâng cao",
+                        "Tiếng lóng và từ thông dụng",
+                        "Biểu thức cố định trong học thuật",
+                        "Thành ngữ trong văn học",
+                        "Cụm từ chuyên ngành nâng cao",
+                        "Phân tích ngữ nghĩa thành ngữ",
+                        "Ứng dụng thành ngữ trong giao tiếp"
+                    ])
+                },
+                { 
+                    id: 21, 
+                    name: "Tiếng Anh Thành Thạo - Phần 3: Tranh luận và hùng biện", 
+                    level: "proficient", 
+                    description: "Kỹ năng tranh luận và kể chuyện nâng cao",
+                    lessons: generateLessons("proficient", 3, 8, [
+                        "Kỹ thuật tranh luận hiệu quả",
+                        "Xây dựng luận điểm và bằng chứng",
+                        "Phản biện và phản hồi ý kiến",
+                        "Kỹ năng hùng biện thuyết phục",
+                        "Kể chuyện và tường thuật nâng cao",
+                        "Sử dụng ngôn ngữ hình ảnh và ẩn dụ",
+                        "Điều chỉnh ngôn ngữ theo đối tượng",
+                        "Thực hành debate chuyên nghiệp"
+                    ])
+                },
+                { 
+                    id: 22, 
+                    name: "Tiếng Anh Thành Thạo - Phần 4: Viết sáng tạo", 
+                    level: "proficient", 
+                    description: "Phát triển kỹ năng viết sáng tạo và phân tích",
+                    lessons: generateLessons("proficient", 4, 8, [
+                        "Kỹ thuật viết sáng tạo",
+                        "Phân tích văn học và phê bình",
+                        "Viết bài nghiên cứu học thuật",
+                        "Kỹ năng biên tập và hiệu đính",
+                        "Viết content marketing chuyên nghiệp",
+                        "Phong cách viết cá nhân và độc đáo",
+                        "Viết kịch bản và kể chuyện",
+                        "Hoàn thiện portfolio viết"
+                    ])
+                },
+                { 
+                    id: 23, 
+                    name: "Tiếng Anh Thành Thạo - Phần 5: Tư duy phản biện", 
+                    level: "proficient", 
+                    description: "Phát triển tư duy phản biện bằng tiếng Anh",
+                    lessons: generateLessons("proficient", 5, 8, [
+                        "Nguyên lý tư duy phản biện",
+                        "Phân tích logic và ngụy biện",
+                        "Đánh giá nguồn thông tin",
+                        "Giải quyết vấn đề phức tạp",
+                        "Ra quyết định dựa trên phân tích",
+                        "Tư duy hệ thống trong giao tiếp",
+                        "Phản biện văn bản học thuật",
+                        "Case study tư duy phản biện"
+                    ])
+                },
+                { 
+                    id: 24, 
+                    name: "Tiếng Anh Thành Thạo - Phần 6: Giao tiếp đỉnh cao", 
+                    level: "proficient", 
+                    description: "Hoàn thiện kỹ năng giao tiếp ở cấp độ thành thạo",
+                    lessons: generateLessons("proficient", 6, 8, [
+                        "Nghệ thuật giao tiếp tinh tế",
+                        "Điều chỉnh ngôn ngữ theo ngữ cảnh",
+                        "Giao tiếp trong môi trường căng thẳng",
+                        "Kỹ năng đàm phán đỉnh cao",
+                        "Xây dựng mối quan hệ chuyên nghiệp",
+                        "Thuyết phục và gây ảnh hưởng",
+                        "Giao tiếp phi ngôn từ nâng cao",
+                        "Thực hành giao tiếp thực tế"
+                    ])
+                },
+                { 
+                    id: 25, 
+                    name: "Tiếng Anh Thành Thạo - Phần 7: Ứng dụng thực tiễn", 
+                    level: "proficient", 
+                    description: "Ứng dụng tiếng Anh trong các tình huống thực tế",
+                    lessons: generateLessons("proficient", 7, 8, [
+                        "Tiếng Anh trong hội nghị quốc tế",
+                        "Giao tiếp trong môi trường đa quốc gia",
+                        "Tiếng Anh cho nhà quản lý",
+                        "Giao tiếp trong lĩnh vực giáo dục",
+                        "Tiếng Anh trong truyền thông",
+                        "Giao tiếp trong lĩnh vực y tế",
+                        "Tiếng Anh trong công nghệ và startup",
+                        "Case study giao tiếp chuyên nghiệp"
+                    ])
+                },
+                { 
+                    id: 26, 
+                    name: "Tiếng Anh Thành Thạo - Phần 8: Kiểm tra tổng thể", 
+                    level: "proficient", 
+                    description: "Đánh giá tổng thể và hoàn thiện kỹ năng",
+                    lessons: generateLessons("proficient", 8, 8, [
+                        "Ôn tập toàn diện ngữ pháp",
+                        "Luyện tập phát âm hoàn hảo",
+                        "Thực hành nghe nói tổng hợp",
+                        "Kiểm tra viết học thuật",
+                        "Đánh giá kỹ năng đọc hiểu",
+                        "Thi thử speaking chuyên nghiệp",
+                        "Phân tích và cải thiện điểm yếu",
+                        "Kiểm tra tổng kết Thành thạo"
+                    ])
                 }
             ],
             surveyQuestions: [
@@ -3141,57 +3292,60 @@
             ]
         };
 
-        // Thêm 10 khóa học mẫu với nhiều bài học
-        for (let i = 4; i <= 13; i++) {
-            let level = "basic";
-            if (i > 7) level = "intermediate";
-            if (i > 10) level = "advanced";
-            
-            // Tạo số bài học ngẫu nhiên từ 3 đến 7
-            const lessonCount = Math.floor(Math.random() * 5) + 3;
+        // Hàm tạo bài học tự động theo cấu trúc
+        function generateLessons(level, partNumber, lessonCount, titles) {
             const lessons = [];
+            const levelNames = {
+                'basic': 'Cơ bản',
+                'elementary': 'Sơ cấp', 
+                'intermediate': 'Trung cấp',
+                'advanced': 'Cao cấp',
+                'proficient': 'Thành thạo'
+            };
             
-            for (let j = 1; j <= lessonCount; j++) {
+            for (let i = 1; i <= lessonCount; i++) {
+                const vocabCount = level === 'basic' ? 5 : 
+                                 level === 'elementary' ? 6 :
+                                 level === 'intermediate' ? 7 :
+                                 level === 'advanced' ? 8 : 10;
+                
+                const vocabulary = [];
+                for (let v = 1; v <= vocabCount; v++) {
+                    vocabulary.push({
+                        word: `${levelNames[level]}Word${partNumber}${i}${v}`,
+                        meaning: `Nghĩa của từ ${levelNames[level]} ${partNumber}.${i}.${v}`,
+                        example: `Đây là ví dụ cho từ ${levelNames[level]} ${partNumber}.${i}.${v}`
+                    });
+                }
+                
                 lessons.push({
-                    id: i * 10 + j,
-                    title: `Bài ${j}: Chủ đề ${level === "basic" ? "Cơ bản" : level === "intermediate" ? "Trung cấp" : "Nâng cao"} ${j}`,
+                    id: partNumber * 100 + i,
+                    title: titles[i-1] || `Bài ${i}: ${levelNames[level]} Phần ${partNumber}`,
                     videoUrl: "https://www.youtube.com/embed/7Z0_NKp-COQ",
-                    description: `Mô tả bài học ${level === "basic" ? "Cơ bản" : level === "intermediate" ? "Trung cấp" : "Nâng cao"} ${j}`,
-                    vocabulary: [
-                        { word: `Word${j}1`, meaning: `Meaning${j}1`, example: `Example sentence ${j}1.` },
-                        { word: `Word${j}2`, meaning: `Meaning${j}2`, example: `Example sentence ${j}2.` },
-                        { word: `Word${j}3`, meaning: `Meaning${j}3`, example: `Example sentence ${j}3.` },
-                        { word: `Word${j}4`, meaning: `Meaning${j}4`, example: `Example sentence ${j}4.` },
-                        { word: `Word${j}5`, meaning: `Meaning${j}5`, example: `Example sentence ${j}5.` }
-                    ],
-                    grammar: `Ngữ pháp bài học ${j}. ${level === "basic" ? "Đây là điểm ngữ pháp cơ bản." : level === "intermediate" ? "Đây là điểm ngữ pháp trung cấp." : "Đây là điểm ngữ pháp nâng cao."}`,
+                    description: `Mô tả bài học ${levelNames[level]} Phần ${partNumber} Bài ${i}`,
+                    vocabulary: vocabulary,
+                    grammar: `Điểm ngữ pháp ${levelNames[level]} Phần ${partNumber} Bài ${i}. ${level === 'basic' ? "Đây là điểm ngữ pháp cơ bản." : level === 'elementary' ? "Đây là điểm ngữ pháp sơ cấp." : level === 'intermediate' ? "Đây là điểm ngữ pháp trung cấp." : level === 'advanced' ? "Đây là điểm ngữ pháp cao cấp." : "Đây là điểm ngữ pháp thành thạo."}`,
                     test: [
                         {
-                            question: `Câu hỏi mẫu ${j}?`,
-                            options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+                            question: `Câu hỏi ${levelNames[level]} ${partNumber}.${i}.1?`,
+                            options: ["Lựa chọn A", "Lựa chọn B", "Lựa chọn C", "Lựa chọn D"],
                             answer: Math.floor(Math.random() * 4)
                         },
                         {
-                            question: `Câu hỏi thứ hai ${j}?`,
-                            options: ["Option A", "Option B", "Option C", "Option D"],
+                            question: `Câu hỏi ${levelNames[level]} ${partNumber}.${i}.2?`,
+                            options: ["Phương án 1", "Phương án 2", "Phương án 3", "Phương án 4"],
                             answer: Math.floor(Math.random() * 4)
                         },
                         {
-                            question: `Câu hỏi thứ ba ${j}?`,
-                            options: ["Choice 1", "Choice 2", "Choice 3", "Choice 4"],
+                            question: `Câu hỏi ${levelNames[level]} ${partNumber}.${i}.3?`,
+                            options: ["Đáp án X", "Đáp án Y", "Đáp án Z", "Đáp án W"],
                             answer: Math.floor(Math.random() * 4)
                         }
                     ]
                 });
             }
             
-            sampleData.courses.push({
-                id: i,
-                name: `Khóa học ${level === "basic" ? "Cơ bản" : level === "intermediate" ? "Trung cấp" : "Nâng cao"} ${i}`,
-                level: level,
-                description: `Mô tả khóa học ${level === "basic" ? "Cơ bản" : level === "intermediate" ? "Trung cấp" : "Nâng cao"} ${i}`,
-                lessons: lessons
-            });
+            return lessons;
         }
 
         // Enhanced dictionary words data với nhiều từ vựng hơn
@@ -3205,46 +3359,7 @@
             { word: "carefully", meaning: "một cách cẩn thận", example: "Read the instructions carefully.", type: "adverb", pronunciation: "ˈkerfəli" },
             { word: "development", meaning: "sự phát triển", example: "The development of technology is rapid.", type: "noun", pronunciation: "dɪˈveləpmənt" },
             { word: "education", meaning: "giáo dục", example: "Education is the key to success.", type: "noun", pronunciation: "ˌedʒuˈkeɪʃən" },
-            { word: "environment", meaning: "môi trường", example: "We must protect our environment.", type: "noun", pronunciation: "ɪnˈvaɪrənmənt" },
-            { word: "information", meaning: "thông tin", example: "We need more information about this topic.", type: "noun", pronunciation: "ˌɪnfərˈmeɪʃən" },
-            { word: "knowledge", meaning: "kiến thức", example: "Reading books increases your knowledge.", type: "noun", pronunciation: "ˈnɑːlɪdʒ" },
-            { word: "language", meaning: "ngôn ngữ", example: "English is an international language.", type: "noun", pronunciation: "ˈlæŋɡwɪdʒ" },
-            { word: "learning", meaning: "việc học", example: "Learning new things is exciting.", type: "noun", pronunciation: "ˈlɜːrnɪŋ" },
-            { word: "practice", meaning: "thực hành", example: "Practice makes perfect.", type: "noun", pronunciation: "ˈpræktɪs" },
-            { word: "pronunciation", meaning: "phát âm", example: "Your pronunciation is very good.", type: "noun", pronunciation: "prəˌnʌnsiˈeɪʃən" },
-            { word: "vocabulary", meaning: "từ vựng", example: "I need to improve my vocabulary.", type: "noun", pronunciation: "vəˈkæbjəleri" },
-            { word: "grammar", meaning: "ngữ pháp", example: "English grammar can be difficult.", type: "noun", pronunciation: "ˈɡræmər" },
-            { word: "communication", meaning: "giao tiếp", example: "Good communication is essential.", type: "noun", pronunciation: "kəˌmjuːnɪˈkeɪʃən" },
-            { word: "conversation", meaning: "cuộc trò chuyện", example: "We had an interesting conversation.", type: "noun", pronunciation: "ˌkɑːnvərˈseɪʃən" },
-            { word: "business", meaning: "kinh doanh", example: "He runs a successful business.", type: "noun", pronunciation: "ˈbɪznəs" },
-            { word: "technology", meaning: "công nghệ", example: "Modern technology changes rapidly.", type: "noun", pronunciation: "tekˈnɑːlədʒi" },
-            { word: "science", meaning: "khoa học", example: "She studies computer science.", type: "noun", pronunciation: "ˈsaɪəns" },
-            { word: "mathematics", meaning: "toán học", example: "Mathematics is my favorite subject.", type: "noun", pronunciation: "ˌmæθəˈmætɪks" },
-            { word: "history", meaning: "lịch sử", example: "We learn from history.", type: "noun", pronunciation: "ˈhɪstri" },
-            { word: "culture", meaning: "văn hóa", example: "Vietnamese culture is rich and diverse.", type: "noun", pronunciation: "ˈkʌltʃər" },
-            { word: "society", meaning: "xã hội", example: "We live in a modern society.", type: "noun", pronunciation: "səˈsaɪəti" },
-            { word: "government", meaning: "chính phủ", example: "The government announced new policies.", type: "noun", pronunciation: "ˈɡʌvərnmənt" },
-            { word: "economy", meaning: "kinh tế", example: "The economy is growing steadily.", type: "noun", pronunciation: "ɪˈkɑːnəmi" },
-            { word: "health", meaning: "sức khỏe", example: "Good health is important for happiness.", type: "noun", pronunciation: "helθ" },
-            { word: "medicine", meaning: "y học", example: "Modern medicine can cure many diseases.", type: "noun", pronunciation: "ˈmedɪsɪn" },
-            { word: "art", meaning: "nghệ thuật", example: "She appreciates modern art.", type: "noun", pronunciation: "ɑːrt" },
-            { word: "music", meaning: "âm nhạc", example: "I listen to music every day.", type: "noun", pronunciation: "ˈmjuːzɪk" },
-            { word: "sport", meaning: "thể thao", example: "Football is a popular sport.", type: "noun", pronunciation: "spɔːrt" },
-            { word: "travel", meaning: "du lịch", example: "I love to travel to new places.", type: "verb", pronunciation: "ˈtrævl" },
-            { word: "adventure", meaning: "cuộc phiêu lưu", example: "Life is an adventure.", type: "noun", pronunciation: "ədˈventʃər" },
-            { word: "challenge", meaning: "thử thách", example: "This job presents many challenges.", type: "noun", pronunciation: "ˈtʃælɪndʒ" },
-            { word: "opportunity", meaning: "cơ hội", example: "This is a great opportunity for you.", type: "noun", pronunciation: "ˌɑːpərˈtuːnəti" },
-            { word: "success", meaning: "thành công", example: "Hard work leads to success.", type: "noun", pronunciation: "səkˈses" },
-            { word: "failure", meaning: "thất bại", example: "Failure is part of learning.", type: "noun", pronunciation: "ˈfeɪljər" },
-            { word: "friend", meaning: "bạn bè", example: "A good friend is always there for you.", type: "noun", pronunciation: "frend" },
-            { word: "family", meaning: "gia đình", example: "Family is the most important thing.", type: "noun", pronunciation: "ˈfæməli" },
-            { word: "love", meaning: "tình yêu", example: "Love makes the world go round.", type: "noun", pronunciation: "lʌv" },
-            { word: "hate", meaning: "ghét", example: "I hate waiting in line.", type: "verb", pronunciation: "heɪt" },
-            { word: "hope", meaning: "hy vọng", example: "I hope you have a great day.", type: "verb", pronunciation: "hoʊp" },
-            { word: "dream", meaning: "giấc mơ", example: "Follow your dreams.", type: "noun", pronunciation: "driːm" },
-            { word: "goal", meaning: "mục tiêu", example: "Set clear goals for yourself.", type: "noun", pronunciation: "ɡoʊl" },
-            { word: "plan", meaning: "kế hoạch", example: "Do you have any plans for the weekend?", type: "noun", pronunciation: "plæn" },
-            { word: "idea", meaning: "ý tưởng", example: "That's a great idea!", type: "noun", pronunciation: "aɪˈdiːə" }
+            { word: "environment", meaning: "môi trường", example: "We must protect our environment.", type: "noun", pronunciation: "ɪnˈvaɪrənmənt" }
         ];
 
         // Biến toàn cục
