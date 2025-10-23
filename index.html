@@ -2857,7 +2857,15 @@
                         "Giới thiệu tên và quốc tịch",
                         "Hỏi và trả lời về nghề nghiệp",
                         "Số đếm từ 1-20 và tuổi tác"
-                    ])
+                    ],
+                    [
+                        "https://www.youtube.com/embed/um3YrKRfsr0",
+                        "https://www.youtube.com/embed/hBVequEEoAQ",
+                        "https://www.youtube.com/embed/AzES-nhQFzk",
+                        "https://www.youtube.com/embed/6sSTD2N7Mv8",
+                        "https://www.youtube.com/embed/fI8EsEXS59w"
+                    ]
+                )
                 },
                 { 
                     id: 2, 
@@ -2870,7 +2878,16 @@
                         "Hoạt động hàng ngày và thời gian",
                         "Mô tả gia đình và bạn bè",
                         "Hỏi đường và chỉ dẫn đơn giản"
-                    ])
+                    ],
+                    [
+                        "https://www.youtube.com/embed/kePBvNotYy4",
+                        "https://www.youtube.com/embed/yaLiJwRIe1Q",
+                        "https://www.youtube.com/embed/VtL2XpvRaSA",
+                        "https://www.youtube.com/embed/t9lAjCqxvPQ",
+                        "https://www.youtube.com/embed/_J4UPpIqvAM"
+                    ]
+                    
+                )
                 },
                 { 
                     id: 3, 
@@ -2883,7 +2900,16 @@
                         "Gọi taxi và hỏi đường",
                         "Mô tả đồ vật và màu sắc",
                         "Kiểm tra tổng kết cấp độ Cơ bản"
-                    ])
+                    ],
+                    [
+                        "https://www.youtube.com/embed/wD5A-Eq9yNE",
+                        "https://www.youtube.com/embed/9hUa6XQPCzg",
+                        "https://www.youtube.com/embed/uUMPULuwdLI",
+                        "https://www.youtube.com/embed/CpKQhAVjgec",
+                        "https://www.youtube.com/embed/mQEwpNuZ22s"
+
+                    ]
+                )
                 },
 
                 // CẤP SƠ CẤP (4 phần, 6 video mỗi phần, tổng 24 video)
@@ -2899,7 +2925,16 @@
                         "Mô tả sự kiện trong quá khứ",
                         "Câu hỏi với 'Wh-' trong quá khứ",
                         "Thực hành hội thoại về kỷ niệm"
-                    ])
+                    ],
+                    [
+                        "https://www.youtube.com/embed/Jd4yiK3kFVM",
+                        "https://www.youtube.com/embed/VtL2XpvRaSA",
+                        "https://www.youtube.com/embed/3_-BR1tDXbU",
+                        "https://www.youtube.com/embed/LXSOh3rUlLM",
+                        "https://www.youtube.com/embed/yMZYSmZ9pXs",
+                        "https://www.youtube.com/embed/TVx3I5suXwI"
+                    ]
+                )
                 },
                 { 
                     id: 5, 
@@ -2913,7 +2948,16 @@
                         "Chỉ đường và phương hướng",
                         "Mua vé và đặt chỗ",
                         "Xử lý tình huống du lịch"
-                    ])
+                    ],
+                    [
+                        "https://www.youtube.com/embed/18G7gP35e3Y",
+                        "https://www.youtube.com/embed/LXSOh3rUlLM",
+                        "https://www.youtube.com/embed/tmaGYRqTEd8",
+                        "https://www.youtube.com/embed/_J4UPpIqvAM",
+                        "https://www.youtube.com/embed/rvjkuEuEOmw",
+                        "https://www.youtube.com/embed/0Pzk-GCv1cQ"
+                    ]
+                )
                 },
                 { 
                     id: 6, 
@@ -3293,60 +3337,80 @@
         };
 
         // Hàm tạo bài học tự động theo cấu trúc
-        function generateLessons(level, partNumber, lessonCount, titles) {
-            const lessons = [];
-            const levelNames = {
-                'basic': 'Cơ bản',
-                'elementary': 'Sơ cấp', 
-                'intermediate': 'Trung cấp',
-                'advanced': 'Cao cấp',
-                'proficient': 'Thành thạo'
-            };
-            
-            for (let i = 1; i <= lessonCount; i++) {
-                const vocabCount = level === 'basic' ? 5 : 
-                                 level === 'elementary' ? 6 :
-                                 level === 'intermediate' ? 7 :
-                                 level === 'advanced' ? 8 : 10;
-                
-                const vocabulary = [];
-                for (let v = 1; v <= vocabCount; v++) {
-                    vocabulary.push({
-                        word: `${levelNames[level]}Word${partNumber}${i}${v}`,
-                        meaning: `Nghĩa của từ ${levelNames[level]} ${partNumber}.${i}.${v}`,
-                        example: `Đây là ví dụ cho từ ${levelNames[level]} ${partNumber}.${i}.${v}`
-                    });
-                }
-                
-                lessons.push({
-                    id: partNumber * 100 + i,
-                    title: titles[i-1] || `Bài ${i}: ${levelNames[level]} Phần ${partNumber}`,
-                    videoUrl: "https://www.youtube.com/embed/7Z0_NKp-COQ",
-                    description: `Mô tả bài học ${levelNames[level]} Phần ${partNumber} Bài ${i}`,
-                    vocabulary: vocabulary,
-                    grammar: `Điểm ngữ pháp ${levelNames[level]} Phần ${partNumber} Bài ${i}. ${level === 'basic' ? "Đây là điểm ngữ pháp cơ bản." : level === 'elementary' ? "Đây là điểm ngữ pháp sơ cấp." : level === 'intermediate' ? "Đây là điểm ngữ pháp trung cấp." : level === 'advanced' ? "Đây là điểm ngữ pháp cao cấp." : "Đây là điểm ngữ pháp thành thạo."}`,
-                    test: [
-                        {
-                            question: `Câu hỏi ${levelNames[level]} ${partNumber}.${i}.1?`,
-                            options: ["Lựa chọn A", "Lựa chọn B", "Lựa chọn C", "Lựa chọn D"],
-                            answer: Math.floor(Math.random() * 4)
-                        },
-                        {
-                            question: `Câu hỏi ${levelNames[level]} ${partNumber}.${i}.2?`,
-                            options: ["Phương án 1", "Phương án 2", "Phương án 3", "Phương án 4"],
-                            answer: Math.floor(Math.random() * 4)
-                        },
-                        {
-                            question: `Câu hỏi ${levelNames[level]} ${partNumber}.${i}.3?`,
-                            options: ["Đáp án X", "Đáp án Y", "Đáp án Z", "Đáp án W"],
-                            answer: Math.floor(Math.random() * 4)
-                        }
-                    ]
-                });
-            }
-            
-            return lessons;
+        function generateLessons(level, partNumber, lessonCount, titles, videoUrls) {
+    // Xử lý tham số: nếu videoUrls không tồn tại hoặc là mảng titles thứ 2
+    if (Array.isArray(videoUrls) && videoUrls.length > 0 && typeof videoUrls[0] === 'string' && videoUrls[0].includes('youtube')) {
+        // videoUrls được truyền đúng
+    } else {
+        // Không có videoUrls hoặc đây là cách gọi cũ
+        videoUrls = [];
+    }
+    
+    // Helper: chuyển mọi dạng YouTube sang dạng embed
+    function toEmbed(url) {
+        if (!url) return "https://www.youtube.com/embed/7Z0_NKp-COQ";
+        if (url.includes('youtube.com/embed')) return url;
+        const m = url.match(/(?:v=|\/v\/|youtu\.be\/|\/embed\/)([A-Za-z0-9_-]{8,})/);
+        const id = m ? m[1] : null;
+        return id ? `https://www.youtube.com/embed/${id}` : url;
+    }
+
+    const lessons = [];
+    const levelNames = {
+        'basic': 'Cơ bản',
+        'elementary': 'Sơ cấp', 
+        'intermediate': 'Trung cấp',
+        'advanced': 'Cao cấp', 
+        'proficient': 'Thành thạo'
+    };
+
+    for (let i = 1; i <= lessonCount; i++) {
+        const vocabCount = level === 'basic' ? 5 :
+                             level === 'elementary' ? 6 :
+                             level === 'intermediate' ? 7 :
+                             level === 'advanced' ? 8 : 10;
+
+        const vocabulary = [];
+        for (let v = 1; v <= vocabCount; v++) {
+            vocabulary.push({
+                word: `${levelNames[level]}Word${partNumber}${i}${v}`,
+                meaning: `Nghĩa của từ ${levelNames[level]} ${partNumber}.${i}.${v}`,
+                example: `Đây là ví dụ cho từ ${levelNames[level]} ${partNumber}.${i}.${v}`
+            });
         }
+
+        // Sử dụng videoUrl từ mảng nếu có, không thì dùng mặc định
+        const videoUrl = videoUrls[i - 1] ? toEmbed(videoUrls[i - 1]) : "https://www.youtube.com/embed/7Z0_NKp-COQ";
+
+        lessons.push({
+            id: partNumber * 100 + i,
+            title: titles[i-1] || `Bài ${i}: ${levelNames[level]} Phần ${partNumber}`,
+            videoUrl: videoUrl,
+            description: `Mô tả bài học ${levelNames[level]} Phần ${partNumber} Bài ${i}`,
+            vocabulary: vocabulary,
+            grammar: `Điểm ngữ pháp ${levelNames[level]} Phần ${partNumber} Bài ${i}. ${level === 'basic' ? "Đây là điểm ngữ pháp cơ bản." : level === 'elementary' ? "Đây là điểm ngữ pháp sơ cấp." : level === 'intermediate' ? "Đây là điểm ngữ pháp trung cấp." : level === 'advanced' ? "Đây là điểm ngữ pháp cao cấp." : "Đây là điểm ngữ pháp thành thạo."}`,
+            test: [
+                {
+                    question: `Câu hỏi ${levelNames[level]} ${partNumber}.${i}.1?`,
+                    options: ["Lựa chọn A", "Lựa chọn B", "Lựa chọn C", "Lựa chọn D"],
+                    answer: Math.floor(Math.random() * 4)
+                },
+                {
+                    question: `Câu hỏi ${levelNames[level]} ${partNumber}.${i}.2?`,
+                    options: ["Phương án 1", "Phương án 2", "Phương án 3", "Phương án 4"],
+                    answer: Math.floor(Math.random() * 4)
+                },
+                {
+                    question: `Câu hỏi ${levelNames[level]} ${partNumber}.${i}.3?`,
+                    options: ["Đáp án X", "Đáp án Y", "Đáp án Z", "Đáp án W"],
+                    answer: Math.floor(Math.random() * 4)
+                }
+            ]
+        });
+    }
+
+    return lessons;
+}
 
         // Enhanced dictionary words data với nhiều từ vựng hơn
         const enhancedDictionaryWords = [
